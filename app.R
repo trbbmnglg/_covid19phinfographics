@@ -3,7 +3,7 @@ library(shiny)
 library(png)
 library(chron)
 
-coviddatasets <- read.csv("_datasets/_2020-05/DOH COVID Data Drop_ 20200510 - 05 Case Information.csv", header=TRUE,sep=",",quote="\"")
+coviddatasets <- read.csv("_datasets/_2020-05/DOH COVID Data Drop_ 20200511 - 05 Case Information.csv", header=TRUE,sep=",",quote="\"")
 
 coviddata <- coviddatasets %>%
   select(Sex,Age,AgeGroup,RegionRes,HealthStatus,DateRepConf) %>%
@@ -23,7 +23,7 @@ table(coviddata$HealthStatus)
 #Latest case for the current date
 #Change once new dataset is available
 newCase <- table(coviddata$DateRepConf)
-newCase <- newCase["2020-05-10"]
+newCase <- newCase["2020-05-11"]
 newCase
 
 #Recovered
@@ -88,7 +88,7 @@ ui <- fluidPage(
       
       #Footer
       div(
-        p(id="footer", "Dataset used: DOH COVID Data Drop_ 20200510 - 05 Case Information.csv. Available in DOH website."),
+        p(id="footer", "Dataset used: DOH COVID Data Drop_ 20200511 - 05 Case Information.csv. Available in DOH website."),
         p(id="footer", "Icons made by ", a("Freepik",href="https://www.flaticon.com/authors/freepik"), " and ", a("Flat Icons",href="https://www.flaticon.com/authors/flat-icons"), " from ",
         a("www.flaticon.com", href="https://www.flaticon.com")),
         p(id="footer", "Made with", span(id="heart","❤")  , "in R and Shiny ")
