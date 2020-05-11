@@ -29,7 +29,13 @@ medAge <- median(coviddata$Age, na.rm= TRUE)
 table(coviddata$HealthStatus)
 
 #Latest case for the current date
-newtoday <- Sys.Date()
+getDate <- format(Sys.time(), "%H")
+getDate
+if (getDate != "20") {
+  newtoday <- Sys.Date() - 1
+} else {
+  newtoday <- Sys.Date()
+}
 newCase <- table(coviddata$DateRepConf)
 newCase <- newCase[names(newCase)==newtoday]
 newCase
