@@ -3,7 +3,13 @@ library(shiny)
 library(png)
 library(chron)
 
-coviddatasets <- read.csv("_datasets/_2020-05/DOH COVID Data Drop_ 20200511 - 05 Case Information.csv", header=TRUE,sep=",",quote="\"")
+#Initialize dataset directory
+tmpshot <- fileSnapshot("_datasets/_2020-05/")
+
+#Get latest file from directory
+file <- rownames(tmpshot$info[which.max(tmpshot$info$mtime),])
+latestFile <- paste("_datasets/_2020-05/",file,sep="")
+coviddatasets <- read.csv(latestFile, header=TRUE,sep=",",quote="\"")
 
 coviddata <- coviddatasets %>%
   select(Sex,Age,AgeGroup,RegionRes,HealthStatus,DateRepConf) %>%
@@ -11,19 +17,21 @@ coviddata <- coviddatasets %>%
 coviddata
 
 #MinAge
-MinAge <- min(coviddata$Age, na.rm = TRUE)
+youngest <- min(coviddata$Age, na.rm = TRUE)
 
 #MaxAge
 oldest <- max(coviddata$Age, na.rm = TRUE)
-youngest <- median(coviddata$Age, na.rm= TRUE)
+
+#Mid Age
+medAge <- median(coviddata$Age, na.rm= TRUE)
 
 #Heatlh Status of the cases
 table(coviddata$HealthStatus)
 
 #Latest case for the current date
-#Change once new dataset is available
+newtoday <- Sys.Date()
 newCase <- table(coviddata$DateRepConf)
-newCase <- newCase["2020-05-11"]
+newCase <- newCase[names(newCase)==newtoday]
 newCase
 
 #Recovered
@@ -88,7 +96,7 @@ ui <- fluidPage(
       
       #Footer
       div(
-        p(id="footer", "Dataset used: DOH COVID Data Drop_ 20200511 - 05 Case Information.csv. Available in DOH website."),
+        p(id="footer", file, ". Available in DOH website."),
         p(id="footer", "Icons made by ", a("Freepik",href="https://www.flaticon.com/authors/freepik"), " and ", a("Flat Icons",href="https://www.flaticon.com/authors/flat-icons"), " from ",
         a("www.flaticon.com", href="https://www.flaticon.com")),
         p(id="footer", "Made with", span(id="heart","❤")  , "in R and Shiny ")
