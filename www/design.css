@@ -1,0 +1,95 @@
+@import url("//fonts.googleapis.com/css?family=Lobster|Cabin:400,700");
+
+#big-heading {
+  font-family: Impact;
+  font-weight: 500;
+  line-height: 1.1;
+  color: #636e72;
+  font-size: 65px;
+}
+
+
+body {
+  background-color: #fff;
+}
+
+
+#countofCasesVal{
+  width: 35%;
+  padding: 25px;
+  background: #fdcb6e;
+  color: #FFF;
+  font-family:Impact;
+  font-size: 60px;margin:0;
+}
+
+#countofCasesText{
+  width: 35%;
+  padding: 25px;
+  background: #ffeaa7;
+  color: #fdcb6e;
+  font-family: Impact;
+  font-size: 60px;margin:0;
+}
+
+#recovered{
+  width: 35%;
+  padding: 25px;
+  background: #e17055;
+  color: #FFF;
+  font-family: Impact;
+  font-size: 60px;
+  margin:0;
+}
+
+#gender{
+  margin:25px 0px;
+}
+
+#new{
+  width: 35%;
+  padding: 25px;
+  background: #a29bfe;
+  color: #6c5ce7;
+  font-family: Impact;
+  font-size: 60px;
+  margin:10px;
+}
+
+#fpercent{
+  background: #fff;
+  color: #ff7675;
+  font-family: Impact;
+  font-size: 50px;
+  margin:0px;
+}
+        
+        
+#mpercent{
+  background: #fff;
+  color: #81ecec;
+  font-family: Impact;
+  font-size: 60px;
+  margin:0px;
+}
+      
+#oldest{
+  width: 35%;
+  padding: 25px;
+  background: #dfe6e9;
+  color: #636e72;
+  font-family: Impact;
+  font-size: 60px;
+  margin:10px;
+}
+#oldest_case{
+  font-size: 40px;
+}
+#oldest_desc{
+  font-size: 65px;
+  margin-top: -25px;
+}
+
+#heart{
+  color: #d63031;
+}
