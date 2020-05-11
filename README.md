@@ -5,7 +5,7 @@ Simple infographics written in R and Shiny using the latest available datasets o
 
 ### 2020-05-11
 - Initial deployment.
--Initial repo.
+- Initial repo.
 - Added 05/11 datasets
 - Change static dates.
 - Updated footer.
