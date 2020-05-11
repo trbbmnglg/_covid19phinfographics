@@ -29,8 +29,10 @@ medAge <- median(coviddata$Age, na.rm= TRUE)
 table(coviddata$HealthStatus)
 
 #Latest case for the current date
+Sys.setenv(TZ='Asia/Manila')
 getDate <- format(Sys.time(), "%H")
 getDate
+
 if (getDate != "20") {
   newtoday <- Sys.Date() - 1
 } else {
