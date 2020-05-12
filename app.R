@@ -11,6 +11,12 @@ file <- rownames(tmpshot$info[which.max(tmpshot$info$mtime),])
 latestFile <- paste("_datasets/_2020-05/",file,sep="")
 coviddatasets <- read.csv(latestFile, header=TRUE,sep=",",quote="\"")
 
+#Extract only needed column
+coviddata <- coviddatasets %>%
+  select(Sex,Age,AgeGroup,RegionRes,HealthStatus,DateRepConf) %>%
+  arrange(desc(Age))
+coviddata
+
 #MinAge
 youngest <- min(coviddata$Age, na.rm = TRUE)
 
