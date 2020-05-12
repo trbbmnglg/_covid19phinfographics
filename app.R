@@ -81,7 +81,7 @@ ui <- fluidPage(
   
   includeCSS("www/design.css"),
 
-    # Main panel for displaying outputs ----
+    # Main panel for displaying outputs
     mainPanel(
       align = "center",
       width=100,
@@ -112,7 +112,6 @@ ui <- fluidPage(
         ),
       
       #Least Case Region
-      #lc in ids means least case
       div(
       class="leastcase",
       p(id="header-lc","region w/ least case"),
@@ -124,8 +123,7 @@ ui <- fluidPage(
       
       br(),
       
-      #Hightest Case Region
-      #hc in ids means highest case
+      #Highest Case Region
       div(
         class="highcase",
         p(id="header-hc","and highest case is"),
