@@ -15,3 +15,5 @@ Simple infographics written in R and Shiny using the latest available datasets o
 - Dynamic reading of datasets.
 - Dynamic dataset file name in footer.
 - Dynamic counting of new cases.
+- Added two Region stats.
+- Fix some text size on different screens.
