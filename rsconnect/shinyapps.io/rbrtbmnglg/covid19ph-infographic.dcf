@@ -5,9 +5,9 @@ account: rbrtbmnglg
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 2277674
-bundleId: 3133086
+bundleId: 3138149
 url: https://rbrtbmnglg.shinyapps.io/covid19ph-infographic/
-when: 1589222879.05537
+when: 1589305670.27177
 asMultiple: FALSE
 asStatic: FALSE
-ignoredFiles: _datasets/_2020-05/DOH COVID Data Drop_ 20200510 - 05 Case Information.csv
+ignoredFiles: _datasets/_2020-05/DOH COVID Data Drop_ 20200510 - 05 Case Information.csv|_datasets/_2020-05/DOH COVID Data Drop_ 20200511 - 05 Case Information.csv
