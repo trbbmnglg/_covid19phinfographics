@@ -11,11 +11,6 @@ file <- rownames(tmpshot$info[which.max(tmpshot$info$mtime),])
 latestFile <- paste("_datasets/_2020-05/",file,sep="")
 coviddatasets <- read.csv(latestFile, header=TRUE,sep=",",quote="\"")
 
-coviddata <- coviddatasets %>%
-  select(Sex,Age,AgeGroup,RegionRes,HealthStatus,DateRepConf) %>%
-  arrange(desc(Age))
-coviddata
-
 #MinAge
 youngest <- min(coviddata$Age, na.rm = TRUE)
 
@@ -46,26 +41,42 @@ newCase
 recovered <- table(coviddata$HealthStatus)
 recovered <- recovered["Recovered"]
 
+#Total count of cases
 countofCases <- count(coviddata)
+
 #Data For Male
-maleCount <- table(coviddata$Sex)
-maleCount <- maleCount["Male"]
-maleCount
-malePerCentage <- round(maleCount / countofCases,2) * 100
+malePerCentage <- coviddatasets %>% 
+  filter(Sex=="Male") %>%
+  count(Sex) %>%
+  summarize(malePerCentage=round(n/countofCases, 2) * 100)
 malePerCentage
 
-
 #Data For Female
-femaleCount <- table(coviddata$Sex)
-femaleCount <- femaleCount["Female"]
-femaleCount
-femalePerCentage <- round(femaleCount / countofCases,2) * 100
+femalePerCentage <- coviddatasets %>% 
+  filter(Sex=="Female") %>%
+  count(Sex) %>%
+  summarize(femalePerCentage=round(n/countofCases, 2) * 100)
 femalePerCentage
 
-yesterday <- Sys.Date()-1
+#Region with least case
+leastCasereg <- coviddatasets %>% 
+count(RegionRes) %>%
+  arrange(n) %>%
+  top_n(-1)
+leastCasereg
 
-# Define UI for app that draws a histogram ----
+#Region with highest case
+highCasereg <- coviddatasets %>% 
+  count(RegionRes) %>%
+  top_n(1)
+highCasereg
+
+# Web UI
 ui <- fluidPage(
+  tags$head(
+    tags$meta(name="viewport", content="width=device-width, initial-scale=1.0"),
+    tags$title("COVID 19 PH Infographics")
+  ),
   align="center",
   
   includeCSS("www/design.css"),
@@ -85,11 +96,11 @@ ui <- fluidPage(
       #Percentage of the freuency of Male and Female
       div(
         id="gender",
-        span(id="fpercent",femalePerCentage, "%", img(src = "woman.png", height = 90, width = 90) ),
-        span(id="mpercent",malePerCentage, "%", img(src = "man.png", height = 90, width = 90)) ),
+        span(id="fpercent",femalePerCentage, "%", img(src = "woman.png", height = 50, width = 50) ),
+        span(id="mpercent",malePerCentage, "%", img(src = "man.png", height = 50, width = 50)) ),
       
       #Count of new case
-      p(id="new", strong(img(src = "bacteria.png", height = 80, width = 80), newCase, " new")),
+      div(id="new", strong(img(src = "bacteria.png", height = 80, width = 80), newCase, " new")),
       
       
       #Oldest case
@@ -97,9 +108,34 @@ ui <- fluidPage(
         id="oldest",
         img(src = "back.png", height = 120, width = 120),
         div(id="oldest_case","OLDEST CASE"),
-        div(id="oldest_desc" ,oldest, "yrs. old")),
+        div(id="oldest_desc" ,oldest, "yrs. old")
+        ),
       
+      #Least Case Region
+      #lc in ids means least case
+      div(
+      class="leastcase",
+      p(id="header-lc","region w/ least case"),
+      div(
+      id="container-lc",
+      span(id="region-lc", strong(leastCasereg$RegionRes)),
+      span(id="count-lc",strong(leastCasereg$n), " cases only"))
+      ),
       
+      br(),
+      
+      #Hightest Case Region
+      #hc in ids means highest case
+      div(
+        class="highcase",
+        p(id="header-hc","and highest case is"),
+        div(
+          id="container-hc",
+          span(id="region-hc", strong(highCasereg$RegionRes)),
+          span(id="count-hc","with ",strong(format(highCasereg$n, nsmall=1, big.mark=",")), " cases"))
+      ),
+      
+      br(),
       br(),
       
       #Footer

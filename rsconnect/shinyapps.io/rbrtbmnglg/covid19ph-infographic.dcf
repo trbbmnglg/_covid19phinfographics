@@ -1,0 +1,13 @@
+name: covid19ph-infographic
+title: covid19ph-infographic
+username:
+account: rbrtbmnglg
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2277674
+bundleId: 3133086
+url: https://rbrtbmnglg.shinyapps.io/covid19ph-infographic/
+when: 1589222879.05537
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: _datasets/_2020-05/DOH COVID Data Drop_ 20200510 - 05 Case Information.csv

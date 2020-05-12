@@ -5,7 +5,8 @@
   font-weight: 500;
   line-height: 1.1;
   color: #636e72;
-  font-size: 65px;
+  font-size: 4.76vw;
+  text-decoration: underline;
 }
 
 
@@ -20,7 +21,8 @@ body {
   background: #fdcb6e;
   color: #FFF;
   font-family:Impact;
-  font-size: 60px;margin:0;
+  font-size: 4.4vw;
+  margin:0;
 }
 
 #countofCasesText{
@@ -29,7 +31,8 @@ body {
   background: #ffeaa7;
   color: #fdcb6e;
   font-family: Impact;
-  font-size: 60px;margin:0;
+  font-size: 4.4vw;
+  margin:0;
 }
 
 #recovered{
@@ -38,7 +41,7 @@ body {
   background: #e17055;
   color: #FFF;
   font-family: Impact;
-  font-size: 60px;
+  font-size: 4.4vw;
   margin:0;
 }
 
@@ -52,25 +55,27 @@ body {
   background: #a29bfe;
   color: #6c5ce7;
   font-family: Impact;
-  font-size: 60px;
+  font-size: 4.4vw;
   margin:10px;
 }
 
 #fpercent{
-  background: #fff;
+  background: #ffc9d3;
   color: #ff7675;
   font-family: Impact;
-  font-size: 60px;
-  margin:0px;
+  font-size: 4.4vw;
+  margin: 0px;
+  padding: 15px;
 }
         
         
 #mpercent{
-  background: #fff;
+  background: #d7f0fb;
   color: #81ecec;
   font-family: Impact;
-  font-size: 60px;
-  margin:0px;
+  font-size: 4.4vw;
+  margin: 0px;
+  padding: 15px;
 }
       
 #oldest{
@@ -79,17 +84,87 @@ body {
   background: #dfe6e9;
   color: #636e72;
   font-family: Impact;
-  font-size: 60px;
+  font-size: 4.4vw;
   margin:10px;
 }
 #oldest_case{
-  font-size: 40px;
+  font-size: 2.93vw;
 }
 #oldest_desc{
-  font-size: 65px;
+  font-size: 4.4vw;
   margin-top: -25px;
 }
 
 #heart{
   color: #d63031;
+}
+
+.leastcase{
+  width: 50%;
+  height: auto;
+}
+
+#header-lc{
+  width: auto;
+  font-family: Impact;
+  font-size: 2.93vw;
+  color: #636e72;
+  margin-bottom: -5px;
+}
+
+#container{
+  width: auto;
+  height: auto;
+}
+
+#region-lc{
+  width: auto;
+  background: #e84393;
+  color: #fd79a8;
+  font-family:Impact;
+  font-size: 4.4vw;
+}
+
+#count-lc{
+  width: auto;
+  background: #fd79a8;
+  color: #e84393;
+  font-family: Impact;
+  font-size: 4.4vw;
+  padding-left: 5px;
+}
+
+.highcase{
+  width: 50%;
+  height: auto;
+}
+
+#header-hc{
+  width: auto;
+  font-family: Impact;
+  font-size: 2.93vw;
+  color: #636e72;
+  margin-bottom: -5px;
+}
+
+#container{
+  width: auto;
+  height: auto;
+}
+
+#region-hc{
+  width: auto;
+  background: #ff7675;
+  color: #d63031;
+  font-family:Impact;
+  font-size: 4.4vw;
+}
+
+#count-hc{
+  width: auto;
+  background: #d63031;
+  color: #ff7675;
+  font-family: Impact;
+  font-size: 4.4vw;
+  padding-left: 5px;
 }
