@@ -14,68 +14,91 @@ body {
   background-color: #fff;
 }
 
+.casescount{
+  width: 50%;
+  height: auto;
+  margin-bottom: 5px;
+}
 
 #countofCasesVal{
   width: 35%;
-  padding: 25px;
+  padding: 5px;
   background: #fdcb6e;
   color: #FFF;
   font-family:Impact;
   font-size: 4.4vw;
-  margin:0;
 }
 
 #countofCasesText{
   width: 35%;
-  padding: 25px;
+  padding: 5px;
   background: #ffeaa7;
   color: #fdcb6e;
   font-family: Impact;
   font-size: 4.4vw;
-  margin:0;
 }
 
-#recovered{
+.recovered{
   width: 35%;
   padding: 25px;
   background: #e17055;
   color: #FFF;
   font-family: Impact;
   font-size: 4.4vw;
-  margin:0;
+  margin:5px 0px;
 }
 
-#gender{
-  margin:25px 0px;
+.deaths{
+  width: 35%;
+  padding: 25px;
+  background: #78e08f;
+  color: #4d8257;
+  font-family: Impact;
+  font-size: 4.4vw;
+  margin:5px 0px;
+}
+
+.gender{
+  width: 35%;
+  height: 155px;
+}
+
+#header-gender{
+  width: auto;
+  font-family: Impact;
+  font-size: 2.93vw;
+  color: #636e72;
+  margin-bottom: 5px;
+}
+
+#fpercent{
+  width: inherit;
+  background: #ffc9d3;
+  color: #ff7675;
+  font-family: Impact;
+  font-size: 4.4vw;
+  padding: 9.5px;
+}
+        
+        
+#mpercent{
+  width: inherit;
+  background: #d7f0fb;
+  color: #81ecec;
+  font-family: Impact;
+  font-size: 4.4vw;
+  padding: 9.5px;
 }
 
 #new{
   width: 35%;
+  height: 200px;
   padding: 25px;
   background: #a29bfe;
   color: #6c5ce7;
   font-family: Impact;
   font-size: 4.4vw;
-  margin:10px;
-}
-
-#fpercent{
-  background: #ffc9d3;
-  color: #ff7675;
-  font-family: Impact;
-  font-size: 4.4vw;
-  margin: 0px;
-  padding: 15px;
-}
-        
-        
-#mpercent{
-  background: #d7f0fb;
-  color: #81ecec;
-  font-family: Impact;
-  font-size: 4.4vw;
-  margin: 0px;
-  padding: 15px;
+  margin:5px;
 }
       
 #oldest{
@@ -91,7 +114,7 @@ body {
   font-size: 2.93vw;
 }
 #oldest_desc{
-  font-size: 4.4vw;
+  font-size: 4vw;
   margin-top: -25px;
 }
 

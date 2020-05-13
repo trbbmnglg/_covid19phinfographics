@@ -36,11 +36,20 @@ getDate
 
 if (getDate != "20") {
   newtoday <- Sys.Date() - 1
+  newtoday
 } else {
   newtoday <- Sys.Date()
+  newtoday
 }
+
 newCase <- table(coviddata$DateRepConf)
 newCase <- newCase[names(newCase)==newtoday]
+
+if(length(newCase) == 0){
+  newCase <- " data outdated ☹"
+} else{
+  newCase <- as.character(paste(newCase, "new cases!", sep=" "))
+}
 newCase
 
 #Recovered
@@ -49,6 +58,13 @@ recovered <- recovered["Recovered"]
 
 #Total count of cases
 countofCases <- count(coviddata)
+
+
+#Count of Total Deaths
+totalDeaths <- coviddatasets %>% 
+  filter(HealthStatus=="Died") %>%
+  count(HealthStatus)
+totalDeaths
 
 #Data For Male
 malePerCentage <- coviddatasets %>% 
@@ -93,23 +109,47 @@ ui <- fluidPage(
       width=100,
       h1(id="big-heading", "COVID-19 PH INFOGRAPHICS"),
       br(),
-      br(),
-      p(span(id="countofCasesVal", format(countofCases$n, nsmall=1, big.mark=",")),
-      span(id="countofCasesText", "TOTAL CASES")),
-      br(),
-      p(id="recovered", format(recovered, nsmall=1, big.mark=","), " total recovered",  img(src = "first-aid.png", height = 80, width = 80)),
       
-      #Percentage of the freuency of Male and Female
+      #Display total count of cases
       div(
-        id="gender",
-        span(id="fpercent",femalePerCentage, "%", img(src = "woman.png", height = 50, width = 50) ),
-        span(id="mpercent",malePerCentage, "%", img(src = "man.png", height = 50, width = 50)) ),
+        class="casescount",
+        span(id="countofCasesVal", strong(format(countofCases$n, nsmall=1, big.mark=","))),
+        span(id="countofCasesText", "total cases")
+      ),
       
-      #Count of new case
-      div(id="new", strong(img(src = "bacteria.png", height = 80, width = 80), newCase, " new")),
+      #Display total count of recovery
+      div(
+        class="recovered",
+        format(recovered, nsmall=1, big.mark=","),
+        " total recovered",
+        img(src = "first-aid.png", height = 80, width = 80)
+        ),
+      
+      #Display total count of deaths
+      div(
+        class="deaths",
+        img(src = "cross.png", height = 80, width = 80),
+        format(totalDeaths$n, nsmall=1, big.mark=","),
+        " deaths"
+        ),
+      
+      #Display percentage of gender
+      div(
+        class="gender",
+        p(id="header-gender","gender % of total cases"),
+        span(id="fpercent",femalePerCentage, "%", img(src = "woman.png", height = 80, width = 80) ),
+        span(id="mpercent",malePerCentage, "%", img(src = "man.png", height = 80, width = 80)) ),
+      
+      #Display count of new case
+      div(
+        id="new",
+        img(src = "bacteria.png", height = 80, width = 80),
+        br(),
+        newCase
+        ),
       
       
-      #Oldest case
+      #Display Oldest case
       div(
         id="oldest",
         img(src = "back.png", height = 120, width = 120),
@@ -117,7 +157,7 @@ ui <- fluidPage(
         div(id="oldest_desc" ,oldest, "yrs. old")
         ),
       
-      #Least Case Region
+      #Display least case region
       div(
       class="leastcase",
       p(id="header-lc","region w/ least case"),
@@ -129,7 +169,7 @@ ui <- fluidPage(
       
       br(),
       
-      #Highest Case Region
+      #Display highest case region
       div(
         class="highcase",
         p(id="header-hc","and highest case is"),
@@ -144,9 +184,14 @@ ui <- fluidPage(
       
       #Footer
       div(
-        p(id="footer", file, ". Available in DOH website."),
-        p(id="footer", "Icons made by ", a("Freepik",href="https://www.flaticon.com/authors/freepik", target="_blank"), " and ", a("Flat Icons",href="https://www.flaticon.com/authors/flat-icons", target="_blank"), " from ",
-        a("www.flaticon.com", href="https://www.flaticon.com")),
+        p(id="footer", file, ". Available in ",a("DOH", href="http://www.doh.gov.ph/2019-nCoV", target="_blank"), " website."),
+        p(id="footer", "Icons made by ",
+          a("Freepik",href="https://www.flaticon.com/authors/freepik", title="Freepik", target="_blank"),
+          " | ", 
+          a("Flat Icons",href="https://www.flaticon.com/authors/flat-icons", title="Flat-icons", target="_blank"),
+          " | ",
+          a("Smashicons", href="https://www.flaticon.com/authors/smashicons", title="Smashicons", target="_blank"),
+          " from ",a("www.flaticon.com", href="https://www.flaticon.com")),
         p(id="footer", "Made with", span(id="heart","❤")  , "in R and Shiny |",a(" GitHub", href="https://github.com/rbrtbmnglg/_covid19phinfographics", target="_blank"))
         )
     )
