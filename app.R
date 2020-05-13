@@ -145,9 +145,9 @@ ui <- fluidPage(
       #Footer
       div(
         p(id="footer", file, ". Available in DOH website."),
-        p(id="footer", "Icons made by ", a("Freepik",href="https://www.flaticon.com/authors/freepik"), " and ", a("Flat Icons",href="https://www.flaticon.com/authors/flat-icons"), " from ",
+        p(id="footer", "Icons made by ", a("Freepik",href="https://www.flaticon.com/authors/freepik", target="_blank"), " and ", a("Flat Icons",href="https://www.flaticon.com/authors/flat-icons", target="_blank"), " from ",
         a("www.flaticon.com", href="https://www.flaticon.com")),
-        p(id="footer", "Made with", span(id="heart","❤")  , "in R and Shiny ")
+        p(id="footer", "Made with", span(id="heart","❤")  , "in R and Shiny |",a(" GitHub", href="https://github.com/rbrtbmnglg/_covid19phinfographics", target="_blank"))
         )
     )
 )
