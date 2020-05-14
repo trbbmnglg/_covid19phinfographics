@@ -18,9 +18,12 @@ Simple infographics written in R and Shiny using the latest available datasets o
 - Added two Region stats.
 - Fix some text size on different screens.
 
-## 2020-05-14 
+### 2020-05-14 
 - Added 2020-05-13 datasets
+- Added 2020-05-14 datasets
 - Added new block for total count of deaths
 - Updated the design
 - Added new attribution in the footer
 - Fix display of new case once data is outdated
+- Added Monthly trend graph
+- Fix new case logic

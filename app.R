@@ -2,6 +2,10 @@ library(dplyr)
 library(shiny)
 library(png)
 library(chron)
+library(extrafont)
+library(ggplot2)
+library(plotly)
+library(hrbrthemes)
 
 #Initialize dataset directory
 tmpshot <- fileSnapshot("_datasets/_2020-05/")
@@ -30,20 +34,21 @@ medAge <- median(coviddata$Age, na.rm= TRUE)
 table(coviddata$HealthStatus)
 
 #Latest case for the current date
-Sys.setenv(TZ='Asia/Manila')
+Sys.setenv(TZ="Asia/Manila")
 getDate <- format(Sys.time(), "%H")
+getDate <- as.integer(getDate)
 getDate
-
-if (getDate != "20") {
-  newtoday <- Sys.Date() - 1
+if (getDate >= 18) {
+  newtoday <- Sys.Date()
   newtoday
 } else {
-  newtoday <- Sys.Date()
+  newtoday <- Sys.Date() - 1
   newtoday
 }
 
 newCase <- table(coviddata$DateRepConf)
 newCase <- newCase[names(newCase)==newtoday]
+newCase
 
 if(length(newCase) == 0){
   newCase <- " data outdated ☹"
@@ -93,6 +98,31 @@ highCasereg <- coviddatasets %>%
   top_n(1)
 highCasereg
 
+#Monthly Trend
+covidTrend <- coviddata %>%
+  select(DateRepConf) %>%
+  count(DateRepConf)
+covidTrend$DateRepConf <- as.Date( covidTrend$DateRepConf, '%Y-%m-%d')
+covidTrend <- covidTrend %>%
+  ggplot(aes(DateRepConf, n )) +
+  geom_area(fill="#FDA7DF", alpha=0.5) +
+  geom_line(color="#D980FA", size=1, alpha=0.9, linetype=1) +
+  theme_ipsum(
+    plot_title_family = "Impact", 
+    plot_title_size = 65,
+    grid_col = "#FDA7DF",
+    axis_text_size=15,
+    axis_title_size=20,
+    axis_title_family="Impact") +
+  theme(plot.title = element_text(colour = "#D980FA"),
+        axis.text.y = element_text(colour = "#D980FA"),
+        axis.text.x = element_text(colour = "#D980FA"),
+        axis.title.x = element_text(colour = "#FDA7DF"),
+        axis.title.y = element_text(colour = "#FDA7DF")) +
+  labs(x="Month", y="# of cases", title="MONTHLY TREND")
+
+
+
 # Web UI
 ui <- fluidPage(
   tags$head(
@@ -130,7 +160,7 @@ ui <- fluidPage(
         class="deaths",
         img(src = "cross.png", height = 80, width = 80),
         format(totalDeaths$n, nsmall=1, big.mark=","),
-        " deaths"
+        " died"
         ),
       
       #Display percentage of gender
@@ -180,6 +210,14 @@ ui <- fluidPage(
       ),
       
       br(),
+      
+      #Display monthly trend
+      div(
+        class="monthly-trend",
+        plotOutput(outputId = "monthlyCovidTrend")
+      ),
+      
+      br(),
       br(),
       
       #Footer
@@ -199,6 +237,8 @@ ui <- fluidPage(
 
 # Define server logic required to draw a histogram ----
 server <- function(input, output) {
-  
+  output$monthlyCovidTrend <- renderPlot({
+    covidTrend
+  })
 }
 shinyApp(ui = ui, server = server)
