@@ -98,6 +98,7 @@ highCasereg <- coviddatasets %>%
   top_n(1)
 highCasereg
 
+
 #Monthly Trend
 covidTrend <- coviddata %>%
   select(DateRepConf) %>%
@@ -109,7 +110,7 @@ covidTrend <- covidTrend %>%
   geom_line(color="#D980FA", size=1, alpha=0.9, linetype=1) +
   theme_ipsum(
     plot_title_family = "Impact", 
-    plot_title_size = 65,
+    plot_title_size = 30,
     grid_col = "#FDA7DF",
     axis_text_size=15,
     axis_title_size=20,
@@ -119,9 +120,7 @@ covidTrend <- covidTrend %>%
         axis.text.x = element_text(colour = "#D980FA"),
         axis.title.x = element_text(colour = "#FDA7DF"),
         axis.title.y = element_text(colour = "#FDA7DF")) +
-  labs(x="Month", y="# of cases", title="MONTHLY TREND")
-
-
+  labs(x="Month", y="# of cases", title="cases trend by month")
 
 # Web UI
 ui <- fluidPage(
@@ -214,7 +213,7 @@ ui <- fluidPage(
       #Display monthly trend
       div(
         class="monthly-trend",
-        plotOutput(outputId = "monthlyCovidTrend")
+        imageOutput("monthlyCovidTrend")
       ),
       
       br(),
@@ -236,9 +235,31 @@ ui <- fluidPage(
 )
 
 # Define server logic required to draw a histogram ----
-server <- function(input, output) {
-  output$monthlyCovidTrend <- renderPlot({
-    covidTrend
-  })
+server <- function(input, output, session) {
+  output$monthlyCovidTrend <- renderImage({
+
+    # Read myImage's width and height. These are reactive values, so this
+    # expression will re-run whenever they change.
+    width  <- session$clientData$output_myImage_width
+    height <- session$clientData$output_myImage_height
+    
+    # For high-res displays, this will be greater than 1
+    pixelratio <- session$clientData$pixelratio
+    
+    # A temp file to save the output.
+    outfile <- tempfile(fileext='.png')
+    
+    # Generate the image file
+    png(outfile, width = 500, height = 400,
+        res = 72*pixelratio)
+    plot(covidTrend)
+    dev.off()
+    
+    # Return a list containing the filename
+    list(src = outfile,
+         contentType = 'image/png',
+         width = 500,
+         height = 400)
+    },  deleteFile = TRUE)
 }
 shinyApp(ui = ui, server = server)
