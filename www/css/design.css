@@ -1,0 +1,245 @@
+@import url("//fonts.googleapis.com/css?family=Lobster|Cabin:400,700");
+
+#big-heading {
+	font-family: Impact;
+	font-weight: 500;
+	line-height: 1.1;
+	color: #636e72;
+	font-size: 4.76vw;
+	text-decoration: underline;
+}
+
+
+body {
+	background-color: #fff;
+}
+
+.casescount{
+	height: auto;
+}
+
+#countofCasesVal{
+	background: #fdcb6e;
+	color: #FFF;
+	font-family:Impact;
+	font-size: 4.4vw;
+	margin: 0 !important;
+}
+
+#countofCasesText{
+	background: #ffeaa7;
+	color: #fdcb6e;
+	font-family: Impact;
+	font-size: 4.4vw;
+	margin: 0 !important;
+}
+
+#recovered{
+	background: #e17055;
+	color: #FFF;
+	font-family: Impact;
+	font-size: 4.4vw;
+	margin: 0 !important;
+}
+
+#deaths{
+	background: #78e08f;
+	color: #4d8257;
+	font-family: Impact;
+	font-size: 4.4vw;
+	margin: 0 !important;
+}
+
+#deaths img{
+	left: 5;
+	top: 2;
+}
+
+	
+
+#new{
+	background:#8b82ff;
+	color: #3f4fc1;
+	font-family: Impact;
+	font-size: 4.4vw;
+	margin: 0 !important;
+}
+#newText{
+	background: #a29bfe;
+	color: #FFF;
+	font-family: Impact;
+	font-size: 4.4vw;
+	margin: 0 !important;
+}
+  
+#oldest{
+	height: auto;
+	background: #dfe6e9;
+	color: #636e72;
+	font-family: Impact;
+	font-size: 4.4vw;
+	margin: 0 !important;
+}
+
+#old-text{
+   display: inline-block;
+   vertical-align: middle;
+}
+#oldestCasetop, #oldestCase, #oldestCasebot {
+   text-align:center;
+   line-height:90%;
+}
+#oldestCasetop, #oldestCasebot{
+    font-size: 2vw;   
+}
+
+#old-img{
+	display: inline-block;
+	margin-top: 5%;
+	margin-bottom: 5%;
+	vertical-align: middle;
+}
+
+
+/* For Gender */
+#gender{
+	margin: 0 !important;
+	display: inline-flex;
+	height: auto;
+	width: auto;
+	align-items: center;
+}
+
+#woman{
+	height: 190px;
+	background: #ffc9d3;
+	color: #ff7675;
+	font-family: Impact;
+	font-size: 5vw;
+	margin: 0 !important;
+	width: 230px;
+	display: inherit;
+	align-items: inherit;
+}
+
+#woman-text{
+   display: inline-block;
+   vertical-align: middle;
+}
+#fPercent {
+   text-align:center;
+   line-height:90%;
+}
+
+#woman-img{
+	display: inline-block;
+	vertical-align: middle;
+	margin: 5%;
+    margin-right: -2%;
+}
+
+#man{
+	height: 190px;
+	background: #d7f0fb;
+	color: #81ecec;
+	font-family: Impact;
+	font-size: 5vw;
+	margin: 0 !important;
+	width: 230px;
+	display: inherit;
+	align-items: inherit;
+}
+
+#man-text{
+   display: inline-block;
+   vertical-align: middle;
+}
+#mPercent {
+   text-align:center;
+   line-height:90%;
+}
+
+#man-img{
+	display: inline-block;
+	vertical-align: middle;
+	margin: 5%;
+    margin-right: -2%;
+}
+
+#heart{
+	color: #d63031;
+}
+
+.leastcase{
+	width: 50%;
+	height: auto;
+}
+
+#header-lc{
+	width: auto;
+	font-family: Impact;
+	font-size: 2.93vw;
+	color: #636e72;
+	margin-bottom: -5px;
+}
+
+#container{
+	width: auto;
+	height: auto;
+}
+
+#region-lc{
+	width: auto;
+	background: #e84393;
+	color: #fd79a8;
+	font-family:Impact;
+	font-size: 4.4vw;
+}
+
+#count-lc{
+	width: auto;
+	background: #fd79a8;
+	color: #e84393;
+	font-family: Impact;
+	font-size: 4.4vw;
+	padding-left: 5px;
+}
+
+.highcase{
+	width: 50%;
+	height: auto;
+}
+
+#header-hc{
+	width: auto;
+	font-family: Impact !important;
+	font-size: 2.93vw;
+	color: #636e72;
+	margin-bottom: -5px;
+}
+
+#container{
+	width: auto;
+	height: auto;
+}
+
+#region-hc{
+	width: auto;
+	background: #ff7675;
+	color: #d63031;
+	font-family:Impact;
+	font-size: 4.4vw;
+}
+
+#count-hc{
+	width: auto;
+	background: #d63031;
+	color: #ff7675;
+	font-family: Impact;
+	font-size: 4.4vw;
+	padding-left: 5px;
+}
+.monthly-trend{
+	width: 50%;
+	height: auto;
+}

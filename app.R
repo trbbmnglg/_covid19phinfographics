@@ -7,6 +7,7 @@ library(ggplot2)
 library(plotly)
 library(hrbrthemes)
 
+
 #Initialize dataset directory
 tmpshot <- fileSnapshot("_datasets/_2020-05/")
 
@@ -14,6 +15,13 @@ tmpshot <- fileSnapshot("_datasets/_2020-05/")
 file <- rownames(tmpshot$info[which.max(tmpshot$info$mtime),])
 latestFile <- paste("_datasets/_2020-05/",file,sep="")
 coviddatasets <- read.csv(latestFile, header=TRUE,sep=",",quote="\"")
+
+#Extract date from file name
+asofDate <- regexpr("([0-9]{8})", file)
+asofDate <- regmatches(file, asofDate)
+asofDate <- as.Date(asofDate,"%Y%m%d")
+asofDate <- format.Date(asofDate, "%B %d, %Y")
+asofDate
 
 #Extract only needed column
 coviddata <- coviddatasets %>%
@@ -51,9 +59,9 @@ newCase <- newCase[names(newCase)==newtoday]
 newCase
 
 if(length(newCase) == 0){
-  newCase <- " data outdated ☹"
+  newCase <- "data outdated"
 } else{
-  newCase <- as.character(paste(newCase, "new cases!", sep=" "))
+  newCase <- as.character(newCase)
 }
 newCase
 
@@ -71,23 +79,30 @@ totalDeaths <- coviddatasets %>%
   count(HealthStatus)
 totalDeaths
 
+
+#Gender Percentage
+genderPerCentage <- coviddatasets %>% 
+  group_by(Sex) %>%
+  summarise(
+    count = n(),
+    perc = round((count / nrow(.)), 2 ) * 100
+    )
+
 #Data For Male
-malePerCentage <- coviddatasets %>% 
-  filter(Sex=="Male") %>%
-  count(Sex) %>%
-  summarize(malePerCentage=round(n/countofCases, 2) * 100)
-malePerCentage
+malePercentage <- genderPerCentage[genderPerCentage$Sex=="Male","perc"]
+malePercentage <- as.character(malePercentage)
+malePercentage <- paste(malePercentage,"%",sep="")
+malePercentage
 
 #Data For Female
-femalePerCentage <- coviddatasets %>% 
-  filter(Sex=="Female") %>%
-  count(Sex) %>%
-  summarize(femalePerCentage=round(n/countofCases, 2) * 100)
-femalePerCentage
+femalePercentage <- genderPerCentage[genderPerCentage$Sex=="Female","perc"]
+femalePercentage <- as.character(femalePercentage)
+femalePercentage <- paste(femalePercentage,"%",sep="")
+femalePercentage
 
 #Region with least case
 leastCasereg <- coviddatasets %>% 
-count(RegionRes) %>%
+  count(RegionRes) %>%
   arrange(n) %>%
   top_n(-1)
 leastCasereg
@@ -122,144 +137,60 @@ covidTrend <- covidTrend %>%
         axis.title.y = element_text(colour = "#FDA7DF")) +
   labs(x="Month", y="# of cases", title="cases trend by month")
 
-# Web UI
-ui <- fluidPage(
-  tags$head(
-    tags$meta(name="viewport", content="width=device-width, initial-scale=1.0"),
-    tags$title("COVID 19 PH Infographics")
-  ),
-  align="center",
-  
-  includeCSS("www/design.css"),
-
-    # Main panel for displaying outputs
-    mainPanel(
-      align = "center",
-      width=100,
-      h1(id="big-heading", "COVID-19 PH INFOGRAPHICS"),
-      br(),
-      
-      #Display total count of cases
-      div(
-        class="casescount",
-        span(id="countofCasesVal", strong(format(countofCases$n, nsmall=1, big.mark=","))),
-        span(id="countofCasesText", "total cases")
-      ),
-      
-      #Display total count of recovery
-      div(
-        class="recovered",
-        format(recovered, nsmall=1, big.mark=","),
-        " total recovered",
-        img(src = "first-aid.png", height = 80, width = 80)
-        ),
-      
-      #Display total count of deaths
-      div(
-        class="deaths",
-        img(src = "cross.png", height = 80, width = 80),
-        format(totalDeaths$n, nsmall=1, big.mark=","),
-        " died"
-        ),
-      
-      #Display percentage of gender
-      div(
-        class="gender",
-        p(id="header-gender","gender % of total cases"),
-        span(id="fpercent",femalePerCentage, "%", img(src = "woman.png", height = 80, width = 80) ),
-        span(id="mpercent",malePerCentage, "%", img(src = "man.png", height = 80, width = 80)) ),
-      
-      #Display count of new case
-      div(
-        id="new",
-        img(src = "bacteria.png", height = 80, width = 80),
-        br(),
-        newCase
-        ),
-      
-      
-      #Display Oldest case
-      div(
-        id="oldest",
-        img(src = "back.png", height = 120, width = 120),
-        div(id="oldest_case","OLDEST CASE"),
-        div(id="oldest_desc" ,oldest, "yrs. old")
-        ),
-      
-      #Display least case region
-      div(
-      class="leastcase",
-      p(id="header-lc","region w/ least case"),
-      div(
-      id="container-lc",
-      span(id="region-lc", strong(leastCasereg$RegionRes)),
-      span(id="count-lc",strong(leastCasereg$n), " cases only"))
-      ),
-      
-      br(),
-      
-      #Display highest case region
-      div(
-        class="highcase",
-        p(id="header-hc","and highest case is"),
-        div(
-          id="container-hc",
-          span(id="region-hc", strong(highCasereg$RegionRes)),
-          span(id="count-hc","with ",strong(format(highCasereg$n, nsmall=1, big.mark=",")), " cases"))
-      ),
-      
-      br(),
-      
-      #Display monthly trend
-      div(
-        class="monthly-trend",
-        imageOutput("monthlyCovidTrend")
-      ),
-      
-      br(),
-      br(),
-      
-      #Footer
-      div(
-        p(id="footer", file, ". Available in ",a("DOH", href="http://www.doh.gov.ph/2019-nCoV", target="_blank"), " website."),
-        p(id="footer", "Icons made by ",
-          a("Freepik",href="https://www.flaticon.com/authors/freepik", title="Freepik", target="_blank"),
-          " | ", 
-          a("Flat Icons",href="https://www.flaticon.com/authors/flat-icons", title="Flat-icons", target="_blank"),
-          " | ",
-          a("Smashicons", href="https://www.flaticon.com/authors/smashicons", title="Smashicons", target="_blank"),
-          " from ",a("www.flaticon.com", href="https://www.flaticon.com")),
-        p(id="footer", "Made with", span(id="heart","❤")  , "in R and Shiny |",a(" GitHub", href="https://github.com/rbrtbmnglg/_covid19phinfographics", target="_blank"))
-        )
-    )
-)
 
 # Define server logic required to draw a histogram ----
-server <- function(input, output, session) {
-  output$monthlyCovidTrend <- renderImage({
+server <- function(input, output) {
+  
 
-    # Read myImage's width and height. These are reactive values, so this
-    # expression will re-run whenever they change.
-    width  <- session$clientData$output_myImage_width
-    height <- session$clientData$output_myImage_height
-    
-    # For high-res displays, this will be greater than 1
-    pixelratio <- session$clientData$pixelratio
-    
-    # A temp file to save the output.
-    outfile <- tempfile(fileext='.png')
-    
-    # Generate the image file
-    png(outfile, width = 500, height = 400,
-        res = 72*pixelratio)
-    plot(covidTrend)
-    dev.off()
-    
-    # Return a list containing the filename
-    list(src = outfile,
-         contentType = 'image/png',
-         width = 500,
-         height = 400)
-    },  deleteFile = TRUE)
+  #Output Region with Highest case
+  output$highCasereg <- renderText({
+    {highCasereg$n}
+  })
+  
+  #Output Total Cases
+  output$countofCases <- renderText({
+    {format(countofCases$n, nsmall=1, big.mark=",")}
+  })
+  
+  #Output Total Recoveries
+  output$recovery <- renderText({
+    {paste(format(recovered, nsmall=1, big.mark=",")," recoveries",sep=" ")}
+  })
+  
+  
+  #Output Total Deaths
+  output$died <- renderText({
+    {paste(format(totalDeaths$n, nsmall=1, big.mark=","),"died", sep=" ")}
+  })
+  
+  
+  #Output New Case
+  output$newCase <- renderText({
+    {newCase}
+  })
+  
+  #Output Oldest Case
+  output$oldestCase <- renderText({
+    {oldest}
+  })
+  
+  #Output Female percentage
+  output$fPercent <- renderText({
+    {femalePercentage}
+  })
+  
+  #Output Male percentage
+  output$mPercent <- renderText({
+    {malePercentage}
+  })
+  
+  #Output latest data date
+  output$asofDate <- renderText({
+    {asofDate}
+  })
+  
+  
+  
 }
-shinyApp(ui = ui, server = server)
+
+shinyApp(ui = htmlTemplate("www/index.html"), server)
