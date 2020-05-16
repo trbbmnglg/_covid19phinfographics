@@ -1,14 +1,4 @@
-library(tidyr)
-library(dplyr)
-library(shiny)
-library(png)
-library(chron)
-library(extrafont)
-library(ggplot2)
-library(plotly)
-library(hrbrthemes)
-library(RColorBrewer)
-
+source("includes.R")
 
 #Initialize dataset directory
 tmpshot <- fileSnapshot("_datasets/_2020-05/")
@@ -93,7 +83,6 @@ genderPerCentage <- coviddatasets %>%
 malePercentage <- genderPerCentage[genderPerCentage$Sex=="Male","perc"]
 malePercentage <- as.character(malePercentage)
 malePercentage <- paste(malePercentage,"%",sep="")
-#malePercentage <- paste("\U2642", malePercentage, sep="")
 
 #Data For Female
 femalePercentage <- genderPerCentage[genderPerCentage$Sex=="Female","perc"]
@@ -123,14 +112,15 @@ covidTrend <- covidTrend %>%
   geom_line(color="#D980FA", size=1, alpha=0.9, linetype=1) +
   scale_x_date(expand = c(0, 0)) +
   theme_ipsum(
-    #plot_title_family = "Impact", 
+    plot_title_family = "Impact", 
     plot_title_size = 50,
     grid_col = "#FDA7DF",
     axis_text_size=15,
     axis_title_size=18
     #axis_title_family="Impact"
     ) +
-  theme(plot.title = element_text(colour = "#D980FA"),
+  theme(
+        plot.title = element_text(colour = "#D980FA"),
         axis.text.y = element_text(colour = "#D980FA"),
         axis.text.x = element_text(colour = "#D980FA"),
         axis.title.x = element_text(margin = margin(r = 50), colour = "#FDA7DF"),
@@ -140,7 +130,7 @@ covidTrend <- covidTrend %>%
   labs(x="Month", y="# of cases", title="cases over time") +
   ylim(0, 600)
 aspect_ratio <- 2.5
-#ggsave("covidtrend.png", height = 5 * aspect_ratio, width = 7 * aspect_ratio)
+ggsave("www/plots/covidtrend.png", width = 16, height = 12, dpi = "screen", units = "cm", device="png")
 
 
 #Generate Pie chart for count per Region
@@ -159,12 +149,14 @@ showRegCount <- ggplot(regCount, aes(x="", y=CaseCount, fill=Region)) +
   theme_void() +
   scale_fill_manual(values = mycolors) +
   theme(plot.margin = margin(0,0,0,0))
+ggsave("www/plots/region.png", width = 16, height = 12, dpi = "screen", units = "cm", device="png")
 
+library(shiny)
 
 #Call server to display stuffs
 server <- function(input, output, session) {
   
-
+  
   #Output Region with Highest case
   output$highCasereg <- renderText({
     {highCasereg$n}
@@ -220,62 +212,6 @@ server <- function(input, output, session) {
   output$regionHighName <- renderText({
     {highCasereg$RegionRes}
   })
-  
-  
-  #Output case trend
-  output$monthlyCovidTrend <- renderImage({
-    
-    # Read myImage's width and height. These are reactive values, so this
-    # expression will re-run whenever they change.
-    width  <- session$clientData$output_myImage_width
-    height <- session$clientData$output_myImage_height
-    
-    # For high-res displays, this will be greater than 1  
-    pixelratio <- session$clientData$pixelratio
-    
-    # A temp file to save the output.
-    outfile <- tempfile(fileext='.png')
-    
-    # Generate the image file
-    png(outfile, width = 500, height = 400,
-        res = 72*pixelratio)
-    plot(covidTrend)
-    dev.off()
-    
-    # Return a list containing the filename
-    list(src = outfile,
-         contentType = 'image/png',
-         width = 500,
-         height = 400)
-  },  deleteFile = TRUE)
-  
-  
-  #Region count of cases in Pie
-  output$showRegCount <- renderImage({
-    
-    # Read myImage's width and height. These are reactive values, so this
-    # expression will re-run whenever they change.
-    width  <- session$clientData$output_myImage_width
-    height <- session$clientData$output_myImage_height
-    
-    # For high-res displays, this will be greater than 1  
-    pixelratio <- session$clientData$pixelratio
-    
-    # A temp file to save the output.
-    outfile <- tempfile(fileext='.png')
-    
-    # Generate the image file
-    png(outfile, width = 500, height = 400,
-        res = 72*pixelratio)
-    plot(showRegCount)
-    dev.off()
-    
-    # Return a list containing the filename
-    list(src = outfile,
-         contentType = 'image/png',
-         width = 500,
-         height = 400)
-  },  deleteFile = TRUE)
   
 }
 

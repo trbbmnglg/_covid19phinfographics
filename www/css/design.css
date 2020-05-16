@@ -1,4 +1,8 @@
 @import url("//fonts.googleapis.com/css?family=Lobster|Cabin:400,700");
+@font-face {
+	font-family: Impact; 
+	src: url("../fonts/IMPACT.TTF");
+} 
 
 #big-heading {
 	font-family: Impact;
@@ -160,7 +164,6 @@ body {
 #regionCount{
 	font-family: Impact;
 	margin: 0 !important;
-	background: #f5f6fa;
 }
 
 #showRegCount img {
