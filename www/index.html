@@ -49,62 +49,98 @@
     </div>
 	
 	<div class="row">
-		<div class="four columns" id="deaths">
+		<div class="five columns" id="deaths">
 			<span id="died" class="shiny-text-output"></span>
 		</div>
-		<div class="eight columns" id="recovered">
+		<div class="seven columns" id="recovered">
 			<span id="recovery" class="shiny-text-output"></span>
-			<img src="first-aid.png" width="70" height="70" style="margin-bottom:-15px;" />
+			<img src="first-aid.png"/>
 		</div>
     </div>
 	
 	<div class="row">
-		<div class="seven columns" id="newText"><img src="bacteria.png" width="70" height="70" style="margin-bottom:-15px;" /> new cases</div>
+		<div class="seven columns" id="newText">new cases</div>
 		<div class="five columns" id="new">
 			<span id="newCase" class="shiny-text-output"></span>
 		</div>
     </div>
 	
 	<div class="row">
-		<div class="six columns" id="oldest">
-			<div id="old-img">
-			<img src="back.png" height="120" width="120"></img>
-			</div>
-			<div id="old-text">
-				<div id="oldestCasetop">oldest</div>
-				<div id="oldestCase" class="shiny-text-output"></div>
-				<div id="oldestCasebot">yrs. old</div>
-			</div>
-		</div>
-		
 		<div class="six columns" id="gender">
 			<div id="woman">
-				<div id="woman-img">
-				<img src="woman.png" width="80" height="80" />
-				</div>
-				<div id="woman-text">
-					<div id="fPercent" class="shiny-text-output"></div>
-				</div>
-			</div>
-			<div id="man">
-				<div id="man-img">
-				<img src="man.png" width="80" height="80" />
-				</div>
-				<div id="man-text">
-					<div id="mPercent" class="shiny-text-output"></div>
-				</div>
-			</div>
-			
+				<img src="woman.png"/>
+				<span id="fPercent" class="shiny-text-output"></span>
+			</div>	
 		</div>
-	</div>
+		<div class="six columns" id="gender">
+			<div id="man">
+				<img src="man.png"/>
+				<span id="mPercent" class="shiny-text-output"></span>
+			</div>	
+		</div>
+	</div>	
+	
+	<div class="row">
+		<div class="six columns" id="monthly">
+			<div id="monthlyCovidTrend" class="shiny-plot-output">
+			</div>	
+		</div>
+		<div class="six columns" id="regionCount">
+			<div id="showRegCount" class="shiny-image-output">
+			</div>	
+		</div>
+	</div>	
+	
+	<!-- <div class="row"> -->
+		<!-- <div class="six columns" id="newText">highest case</div> -->
+		<!-- <div class="three columns" id="new"> -->
+			<!-- <span id="regionHighName" class="shiny-text-output"></span> -->
+		<!-- </div> -->
+		<!-- <div class="three columns" id="new"> -->
+			<!-- <span id="regionHighNum" class="shiny-text-output"></span> -->
+		<!-- </div> -->
+    <!-- </div>	 -->
+	
+	<!-- <div class="row"> -->
+		<!-- <div class="six columns" id="oldest"> -->
+			<!-- <div id="old-img"> -->
+			<!-- <img src="back.png" height="120" width="120"></img> -->
+			<!-- </div> -->
+			<!-- <div id="old-text"> -->
+				<!-- <div id="oldestCasetop">oldest</div> -->
+				<!-- <div id="oldestCase" class="shiny-text-output"></div> -->
+				<!-- <div id="oldestCasebot">yrs. old</div> -->
+			<!-- </div> -->
+		<!-- </div> -->
+		
+		<!-- <div class="six columns" id="gender"> -->
+			<!-- <div id="woman"> -->
+				<!-- <div id="woman-img"> -->
+				<!-- <img src="woman.png" width="80" height="80" /> -->
+				<!-- </div> -->
+				<!-- <div id="woman-text"> -->
+					<!-- <div id="fPercent" class="shiny-text-output"></div> -->
+				<!-- </div> -->
+			<!-- </div> -->
+			<!-- <div id="man"> -->
+				<!-- <div id="man-img"> -->
+				<!-- <img src="man.png" width="80" height="80" /> -->
+				<!-- </div> -->
+				<!-- <div id="man-text"> -->
+					<!-- <div id="mPercent" class="shiny-text-output"></div> -->
+				<!-- </div> -->
+			<!-- </div> -->
+			
+		<!-- </div> -->
+	<!-- </x-fastdiv> -->
 	</br>
 	</br>
 	<div class="row">
-	<pre>
-	Dataset used available in <a  href="http://www.doh.gov.ph/2019-nCoV" target="_blank">DOH</a> website.
-	Icons made by <a href="https://www.flaticon.com/authors/freepik"  target="_blank">Freepik</a> from <a href="https://www.flaticon.com" target="_blank">www.flaticon.com</a>
+	<p>
+	Dataset used available in <a  href="http://www.doh.gov.ph/2019-nCoV" target="_blank">DOH</a> website.<br>
+	Icons made by <a href="https://www.flaticon.com/authors/freepik"  target="_blank">Freepik</a> from <a href="https://www.flaticon.com" target="_blank">www.flaticon.com</a><br>
 	Made with <span id="heart">❤</span> R and Shiny. | <a href="https://github.com/rbrtbmnglg/_covid19phinfographics" target="_blank">GitHub<a>
-	</pre>
+	</p>
 	</div>
   </div>
 <!-- End Document

@@ -1,3 +1,4 @@
+library(tidyr)
 library(dplyr)
 library(shiny)
 library(png)
@@ -6,6 +7,7 @@ library(extrafont)
 library(ggplot2)
 library(plotly)
 library(hrbrthemes)
+library(RColorBrewer)
 
 
 #Initialize dataset directory
@@ -16,18 +18,19 @@ file <- rownames(tmpshot$info[which.max(tmpshot$info$mtime),])
 latestFile <- paste("_datasets/_2020-05/",file,sep="")
 coviddatasets <- read.csv(latestFile, header=TRUE,sep=",",quote="\"")
 
+
 #Extract date from file name
 asofDate <- regexpr("([0-9]{8})", file)
 asofDate <- regmatches(file, asofDate)
 asofDate <- as.Date(asofDate,"%Y%m%d")
 asofDate <- format.Date(asofDate, "%B %d, %Y")
-asofDate
+
 
 #Extract only needed column
 coviddata <- coviddatasets %>%
   select(Sex,Age,AgeGroup,RegionRes,HealthStatus,DateRepConf) %>%
   arrange(desc(Age))
-coviddata
+
 
 #MinAge
 youngest <- min(coviddata$Age, na.rm = TRUE)
@@ -56,14 +59,13 @@ if (getDate >= 18) {
 
 newCase <- table(coviddata$DateRepConf)
 newCase <- newCase[names(newCase)==newtoday]
-newCase
 
 if(length(newCase) == 0){
   newCase <- "data outdated"
 } else{
   newCase <- as.character(newCase)
 }
-newCase
+
 
 #Recovered
 recovered <- table(coviddata$HealthStatus)
@@ -77,7 +79,6 @@ countofCases <- count(coviddata)
 totalDeaths <- coviddatasets %>% 
   filter(HealthStatus=="Died") %>%
   count(HealthStatus)
-totalDeaths
 
 
 #Gender Percentage
@@ -92,27 +93,24 @@ genderPerCentage <- coviddatasets %>%
 malePercentage <- genderPerCentage[genderPerCentage$Sex=="Male","perc"]
 malePercentage <- as.character(malePercentage)
 malePercentage <- paste(malePercentage,"%",sep="")
-malePercentage
+#malePercentage <- paste("\U2642", malePercentage, sep="")
 
 #Data For Female
 femalePercentage <- genderPerCentage[genderPerCentage$Sex=="Female","perc"]
 femalePercentage <- as.character(femalePercentage)
 femalePercentage <- paste(femalePercentage,"%",sep="")
-femalePercentage
 
 #Region with least case
 leastCasereg <- coviddatasets %>% 
   count(RegionRes) %>%
   arrange(n) %>%
   top_n(-1)
-leastCasereg
+
 
 #Region with highest case
 highCasereg <- coviddatasets %>% 
   count(RegionRes) %>%
   top_n(1)
-highCasereg
-
 
 #Monthly Trend
 covidTrend <- coviddata %>%
@@ -123,23 +121,48 @@ covidTrend <- covidTrend %>%
   ggplot(aes(DateRepConf, n )) +
   geom_area(fill="#FDA7DF", alpha=0.5) +
   geom_line(color="#D980FA", size=1, alpha=0.9, linetype=1) +
+  scale_x_date(expand = c(0, 0)) +
   theme_ipsum(
-    plot_title_family = "Impact", 
-    plot_title_size = 30,
+    #plot_title_family = "Impact", 
+    plot_title_size = 50,
     grid_col = "#FDA7DF",
     axis_text_size=15,
-    axis_title_size=20,
-    axis_title_family="Impact") +
+    axis_title_size=18
+    #axis_title_family="Impact"
+    ) +
   theme(plot.title = element_text(colour = "#D980FA"),
         axis.text.y = element_text(colour = "#D980FA"),
         axis.text.x = element_text(colour = "#D980FA"),
-        axis.title.x = element_text(colour = "#FDA7DF"),
-        axis.title.y = element_text(colour = "#FDA7DF")) +
-  labs(x="Month", y="# of cases", title="cases trend by month")
+        axis.title.x = element_text(margin = margin(r = 50), colour = "#FDA7DF"),
+        axis.title.y = element_text(colour = "#FDA7DF"),
+        plot.background = element_rect(fill = "#fde9f6ad", color="#fde9f6ad"),
+        plot.margin = margin(0,0,0,0)) +
+  labs(x="Month", y="# of cases", title="cases over time") +
+  ylim(0, 600)
+aspect_ratio <- 2.5
+#ggsave("covidtrend.png", height = 5 * aspect_ratio, width = 7 * aspect_ratio)
 
 
-# Define server logic required to draw a histogram ----
-server <- function(input, output) {
+#Generate Pie chart for count per Region
+nb.cols <- 20
+mycolors <- colorRampPalette(brewer.pal(8, "Set2"))(nb.cols)
+
+regCount <- coviddatasets %>% 
+  group_by(RegionRes) %>%
+  summarise(CaseCount=n()) %>%
+  rename("Region" = "RegionRes") %>%
+  arrange(desc(CaseCount))
+regCount$Region[regCount$Region==""]<-"Uncategorized"
+showRegCount <- ggplot(regCount, aes(x="", y=CaseCount, fill=Region)) +
+  geom_bar(stat="identity", width=1) +
+  coord_polar("y", start=0) + 
+  theme_void() +
+  scale_fill_manual(values = mycolors) +
+  theme(plot.margin = margin(0,0,0,0))
+
+
+#Call server to display stuffs
+server <- function(input, output, session) {
   
 
   #Output Region with Highest case
@@ -189,7 +212,70 @@ server <- function(input, output) {
     {asofDate}
   })
   
+  #Output highest case region
+  output$regionHighNum <- renderText({
+    {highCasereg$n}
+  })
   
+  output$regionHighName <- renderText({
+    {highCasereg$RegionRes}
+  })
+  
+  
+  #Output case trend
+  output$monthlyCovidTrend <- renderImage({
+    
+    # Read myImage's width and height. These are reactive values, so this
+    # expression will re-run whenever they change.
+    width  <- session$clientData$output_myImage_width
+    height <- session$clientData$output_myImage_height
+    
+    # For high-res displays, this will be greater than 1  
+    pixelratio <- session$clientData$pixelratio
+    
+    # A temp file to save the output.
+    outfile <- tempfile(fileext='.png')
+    
+    # Generate the image file
+    png(outfile, width = 500, height = 400,
+        res = 72*pixelratio)
+    plot(covidTrend)
+    dev.off()
+    
+    # Return a list containing the filename
+    list(src = outfile,
+         contentType = 'image/png',
+         width = 500,
+         height = 400)
+  },  deleteFile = TRUE)
+  
+  
+  #Region count of cases in Pie
+  output$showRegCount <- renderImage({
+    
+    # Read myImage's width and height. These are reactive values, so this
+    # expression will re-run whenever they change.
+    width  <- session$clientData$output_myImage_width
+    height <- session$clientData$output_myImage_height
+    
+    # For high-res displays, this will be greater than 1  
+    pixelratio <- session$clientData$pixelratio
+    
+    # A temp file to save the output.
+    outfile <- tempfile(fileext='.png')
+    
+    # Generate the image file
+    png(outfile, width = 500, height = 400,
+        res = 72*pixelratio)
+    plot(showRegCount)
+    dev.off()
+    
+    # Return a list containing the filename
+    list(src = outfile,
+         contentType = 'image/png',
+         width = 500,
+         height = 400)
+  },  deleteFile = TRUE)
   
 }
 

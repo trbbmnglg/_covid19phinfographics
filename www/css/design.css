@@ -40,6 +40,18 @@ body {
 	font-family: Impact;
 	font-size: 4.4vw;
 	margin: 0 !important;
+	vertical-align: middle;
+	text-align: center;
+	align-items: center;
+}
+
+#recovered img{
+	vertical-align: middle;
+}
+
+#recover-img{
+	width: 60px;
+	height: 60px;
 }
 
 #deaths{
@@ -104,142 +116,108 @@ body {
 /* For Gender */
 #gender{
 	margin: 0 !important;
-	display: inline-flex;
-	height: auto;
-	width: auto;
+	vertical-align: middle;
+	text-align: center;
 	align-items: center;
 }
 
 #woman{
-	height: 190px;
 	background: #ffc9d3;
-	color: #ff7675;
+	color: #ef7d92;
 	font-family: Impact;
-	font-size: 5vw;
+	font-size: 4.4vw;
 	margin: 0 !important;
-	width: 230px;
-	display: inherit;
-	align-items: inherit;
 }
 
-#woman-text{
-   display: inline-block;
-   vertical-align: middle;
-}
-#fPercent {
-   text-align:center;
-   line-height:90%;
-}
-
-#woman-img{
-	display: inline-block;
+#woman img{
 	vertical-align: middle;
-	margin: 5%;
-    margin-right: -2%;
 }
 
 #man{
-	height: 190px;
 	background: #d7f0fb;
-	color: #81ecec;
+	color: #66cdf7;
 	font-family: Impact;
-	font-size: 5vw;
+	font-size: 4.4vw;
 	margin: 0 !important;
-	width: 230px;
-	display: inherit;
-	align-items: inherit;
 }
 
-#man-text{
-   display: inline-block;
-   vertical-align: middle;
-}
-#mPercent {
-   text-align:center;
-   line-height:90%;
-}
-
-#man-img{
-	display: inline-block;
+#man img{
 	vertical-align: middle;
-	margin: 5%;
-    margin-right: -2%;
 }
+/*Covid Trend*/
+#monthly{
+	font-family: Impact;
+	margin: 0 !important;
+}
+
+#monthlyCovidTrend img {
+    width: 460px;
+    height: auto;
+}
+
+
+/*Region Count*/
+#regionCount{
+	font-family: Impact;
+	margin: 0 !important;
+	background: #f5f6fa;
+}
+
+#showRegCount img {
+    width: 460px;
+    height: auto;
+}
+
 
 #heart{
 	color: #d63031;
 }
 
-.leastcase{
-	width: 50%;
-	height: auto;
+
+
+@media screen and (min-width: 400px) {
+	#recovered img{
+		max-width: 30px !important;
+		height: auto !important;		
+	}
+	#man img{
+		max-width: 40px !important;
+		height: auto !important;
+	}
+	#woman img{
+		max-width: 40px !important;
+		height: auto !important;
+	}
+	#monthlyCovidTrend img {
+		max-width: 100%;
+		height: auto;
+	}
+	#showRegCount img {
+		max-width: 100%;
+		height: auto;
+	}
 }
 
-#header-lc{
-	width: auto;
-	font-family: Impact;
-	font-size: 2.93vw;
-	color: #636e72;
-	margin-bottom: -5px;
-}
-
-#container{
-	width: auto;
-	height: auto;
-}
-
-#region-lc{
-	width: auto;
-	background: #e84393;
-	color: #fd79a8;
-	font-family:Impact;
-	font-size: 4.4vw;
-}
-
-#count-lc{
-	width: auto;
-	background: #fd79a8;
-	color: #e84393;
-	font-family: Impact;
-	font-size: 4.4vw;
-	padding-left: 5px;
-}
-
-.highcase{
-	width: 50%;
-	height: auto;
-}
-
-#header-hc{
-	width: auto;
-	font-family: Impact !important;
-	font-size: 2.93vw;
-	color: #636e72;
-	margin-bottom: -5px;
-}
-
-#container{
-	width: auto;
-	height: auto;
-}
-
-#region-hc{
-	width: auto;
-	background: #ff7675;
-	color: #d63031;
-	font-family:Impact;
-	font-size: 4.4vw;
-}
-
-#count-hc{
-	width: auto;
-	background: #d63031;
-	color: #ff7675;
-	font-family: Impact;
-	font-size: 4.4vw;
-	padding-left: 5px;
-}
-.monthly-trend{
-	width: 50%;
-	height: auto;
+/* Larger than desktop */
+@media screen and (min-width: 1000px) {
+	#recovered img{
+		max-width: 60px !important;
+		height: auto !important;		
+	}
+	#man img{
+		max-width: 60px !important;
+		height: auto !important;
+	}
+	#woman img{
+		max-width: 60px !important;
+		height: auto !important;
+	}
+	#monthlyCovidTrend img {
+		max-width: 100%;
+		height: auto;
+	}	
+	#showRegCount img {
+		max-width: 100%;
+		height: auto;
+	}
 }

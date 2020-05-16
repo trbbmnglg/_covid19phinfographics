@@ -27,3 +27,10 @@ Simple infographics written in R and Shiny using the latest available datasets o
 - Fix display of new case once data is outdated
 - Added Monthly trend graph
 - Fix new case logic
+
+### 2020-05-17
+- Added 2020-05-16 datasets
+- Fixed responsive design
+- Remove oldest
+- Redesined gender %
+- Added two plots
