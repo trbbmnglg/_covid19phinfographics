@@ -1,6 +1,7 @@
 library(tidyr)
 library(dplyr)
 library(shiny)
+library(shinyalert)
 library(png)
 library(chron)
 library(extrafont)

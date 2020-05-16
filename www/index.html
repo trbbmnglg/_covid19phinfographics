@@ -3,28 +3,29 @@
 <head>
 
 {{headContent()}}
+{{useShinyalert()}}
 
-  <!-- Basic Page Needs
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <meta charset="utf-8">
-  <title>COVID-19 PH INFOGRAPHICS</title>
-  <meta name="description" content="">
-  <meta name="author" content="">
+<!-- Basic Page Needs
+–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+<meta charset="utf-8">
+<title>COVID-19 PH INFOGRAPHICS</title>
+<meta name="description" content="">
+<meta name="author" content="">
 
-  <!-- Mobile Specific Metas
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Mobile Specific Metas
+–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- FONT
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+<!-- FONT
+–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+<link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
 
-  <!-- CSS
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/skeleton.css">
-  <link rel="stylesheet" href="css/design.css">
-  
+<!-- CSS
+–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+<link rel="stylesheet" href="css/normalize.css">
+<link rel="stylesheet" href="css/skeleton.css">
+<link rel="stylesheet" href="css/design.css">
+
 </head>
 <body>
 
@@ -36,18 +37,24 @@
         <div id="big-heading">COVID-19 PH INFOGRAPHICS</div>
       </div>
     </div>
-	
+
+  <!-- Display latest date of data
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->	
 	<div class="row" style="margin-top: 2%">
 		data as of <span id="asofDate" class="shiny-text-output"></span>
     </div>
-	
+
+  <!-- Display total count of cases
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->	
 	<div class="row" style="margin-top: 2%">
 		<div class="six columns" id="countofCasesVal">
 			<span id="countofCases" class="shiny-text-output"></span>
 		</div>
 		<div class="six columns" id="countofCasesText">total cases</div>
     </div>
-	
+
+  <!-- Display total count of deaths and recovery
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->	
 	<div class="row">
 		<div class="five columns" id="deaths">
 			<span id="died" class="shiny-text-output"></span>
@@ -57,14 +64,18 @@
 			<img src="first-aid.png"/>
 		</div>
     </div>
-	
+
+  <!-- Display count of latest cases
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->	
 	<div class="row">
 		<div class="seven columns" id="newText">new cases</div>
 		<div class="five columns" id="new">
 			<span id="newCase" class="shiny-text-output"></span>
 		</div>
     </div>
-	
+
+  <!-- Display gender percentage of cases
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->	
 	<div class="row">
 		<div class="six columns" id="gender">
 			<div id="woman">
@@ -79,7 +90,9 @@
 			</div>	
 		</div>
 	</div>	
-	
+
+  <!-- Display generated image for case over time and pie chart of # of cases by region
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->	
 	<div class="row">
 		<div class="six columns" id="monthly">
 			<div id="monthlyCovidTrend">
@@ -93,50 +106,9 @@
 		</div>
 	</div>	
 	
-	<!-- <div class="row"> -->
-		<!-- <div class="six columns" id="newText">highest case</div> -->
-		<!-- <div class="three columns" id="new"> -->
-			<!-- <span id="regionHighName" class="shiny-text-output"></span> -->
-		<!-- </div> -->
-		<!-- <div class="three columns" id="new"> -->
-			<!-- <span id="regionHighNum" class="shiny-text-output"></span> -->
-		<!-- </div> -->
-    <!-- </div>	 -->
-	
-	<!-- <div class="row"> -->
-		<!-- <div class="six columns" id="oldest"> -->
-			<!-- <div id="old-img"> -->
-			<!-- <img src="back.png" height="120" width="120"></img> -->
-			<!-- </div> -->
-			<!-- <div id="old-text"> -->
-				<!-- <div id="oldestCasetop">oldest</div> -->
-				<!-- <div id="oldestCase" class="shiny-text-output"></div> -->
-				<!-- <div id="oldestCasebot">yrs. old</div> -->
-			<!-- </div> -->
-		<!-- </div> -->
-		
-		<!-- <div class="six columns" id="gender"> -->
-			<!-- <div id="woman"> -->
-				<!-- <div id="woman-img"> -->
-				<!-- <img src="woman.png" width="80" height="80" /> -->
-				<!-- </div> -->
-				<!-- <div id="woman-text"> -->
-					<!-- <div id="fPercent" class="shiny-text-output"></div> -->
-				<!-- </div> -->
-			<!-- </div> -->
-			<!-- <div id="man"> -->
-				<!-- <div id="man-img"> -->
-				<!-- <img src="man.png" width="80" height="80" /> -->
-				<!-- </div> -->
-				<!-- <div id="man-text"> -->
-					<!-- <div id="mPercent" class="shiny-text-output"></div> -->
-				<!-- </div> -->
-			<!-- </div> -->
-			
-		<!-- </div> -->
-	<!-- </x-fastdiv> -->
 	</br>
 	</br>
+
 	<div class="row">
 	<p>
 	Dataset used available in <a  href="http://www.doh.gov.ph/2019-nCoV" target="_blank">DOH</a> website.<br>

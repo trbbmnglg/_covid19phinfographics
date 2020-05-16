@@ -113,11 +113,11 @@ covidTrend <- covidTrend %>%
   scale_x_date(expand = c(0, 0)) +
   theme_ipsum(
     plot_title_family = "Impact", 
-    plot_title_size = 50,
+    plot_title_size = 40,
     grid_col = "#FDA7DF",
     axis_text_size=15,
-    axis_title_size=18
-    #axis_title_family="Impact"
+    axis_title_size=18,
+    axis_title_family="Impact"
     ) +
   theme(
         plot.title = element_text(colour = "#D980FA"),
@@ -140,6 +140,7 @@ mycolors <- colorRampPalette(brewer.pal(8, "Set2"))(nb.cols)
 regCount <- coviddatasets %>% 
   group_by(RegionRes) %>%
   summarise(CaseCount=n()) %>%
+  top_n(5) %>%
   rename("Region" = "RegionRes") %>%
   arrange(desc(CaseCount))
 regCount$Region[regCount$Region==""]<-"Uncategorized"
@@ -148,10 +149,11 @@ showRegCount <- ggplot(regCount, aes(x="", y=CaseCount, fill=Region)) +
   coord_polar("y", start=0) + 
   theme_void() +
   scale_fill_manual(values = mycolors) +
-  theme(plot.margin = margin(0,0,0,0))
+  theme(plot.margin = margin(0,0,0,0),
+        plot.title = element_text(family="Impact", colour="#66c2a5", size="40",hjust = 0.5)
+        ) +
+  ggtitle("top 5 region")
 ggsave("www/plots/region.png", width = 16, height = 12, dpi = "screen", units = "cm", device="png")
-
-library(shiny)
 
 #Call server to display stuffs
 server <- function(input, output, session) {
@@ -212,6 +214,23 @@ server <- function(input, output, session) {
   output$regionHighName <- renderText({
     {highCasereg$RegionRes}
   })
+  
+  #Output modal
+  shinyalert(
+    title = "Thanks for visiting!",
+    text = paste("Current data is as of",asofDate,sep=" "),
+    closeOnEsc = TRUE,
+    closeOnClickOutside = FALSE,
+    html = FALSE,
+    type = "info",
+    showConfirmButton = TRUE,
+    showCancelButton = FALSE,
+    confirmButtonText = "I understand",
+    confirmButtonCol = "#AEDEF4",
+    timer = 0,
+    imageUrl = "",
+    animation = TRUE
+  )
   
 }
 
