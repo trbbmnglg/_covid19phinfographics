@@ -1,11 +1,11 @@
 @import url("//fonts.googleapis.com/css?family=Lobster|Cabin:400,700");
 @font-face {
-	font-family: Impact; 
-	src: url("../fonts/IMPACT.TTF");
+	font-family: Oswald; 
+	src: url("../fonts/Oswald-VariableFont_wght.ttf");
 } 
 
 #big-heading {
-	font-family: Impact;
+	font-family: Oswald;
 	font-weight: 500;
 	line-height: 1.1;
 	color: #636e72;
@@ -25,7 +25,7 @@ body {
 #countofCasesVal{
 	background: #fdcb6e;
 	color: #FFF;
-	font-family:Impact;
+	font-family:Oswald;
 	font-size: 4.4vw;
 	margin: 0 !important;
 }
@@ -33,7 +33,7 @@ body {
 #countofCasesText{
 	background: #ffeaa7;
 	color: #fdcb6e;
-	font-family: Impact;
+	font-family: Oswald;
 	font-size: 4.4vw;
 	margin: 0 !important;
 }
@@ -41,7 +41,7 @@ body {
 #recovered{
 	background: #e17055;
 	color: #FFF;
-	font-family: Impact;
+	font-family: Oswald;
 	font-size: 4.4vw;
 	margin: 0 !important;
 	vertical-align: middle;
@@ -61,7 +61,7 @@ body {
 #deaths{
 	background: #78e08f;
 	color: #4d8257;
-	font-family: Impact;
+	font-family: Oswald;
 	font-size: 4.4vw;
 	margin: 0 !important;
 }
@@ -76,14 +76,14 @@ body {
 #new{
 	background:#8b82ff;
 	color: #3f4fc1;
-	font-family: Impact;
+	font-family: Oswald;
 	font-size: 4.4vw;
 	margin: 0 !important;
 }
 #newText{
 	background: #a29bfe;
 	color: #FFF;
-	font-family: Impact;
+	font-family: Oswald;
 	font-size: 4.4vw;
 	margin: 0 !important;
 }
@@ -92,7 +92,7 @@ body {
 	height: auto;
 	background: #dfe6e9;
 	color: #636e72;
-	font-family: Impact;
+	font-family: Oswald;
 	font-size: 4.4vw;
 	margin: 0 !important;
 }
@@ -128,7 +128,7 @@ body {
 #woman{
 	background: #ffc9d3;
 	color: #ef7d92;
-	font-family: Impact;
+	font-family: Oswald;
 	font-size: 4.4vw;
 	margin: 0 !important;
 }
@@ -140,7 +140,7 @@ body {
 #man{
 	background: #d7f0fb;
 	color: #66cdf7;
-	font-family: Impact;
+	font-family: Oswald;
 	font-size: 4.4vw;
 	margin: 0 !important;
 }
@@ -150,7 +150,7 @@ body {
 }
 /*Covid Trend*/
 #monthly{
-	font-family: Impact;
+	font-family: Oswald;
 	margin: 0 !important;
 }
 
@@ -162,7 +162,7 @@ body {
 
 /*Region Count*/
 #regionCount{
-	font-family: Impact;
+	font-family: Oswald;
 	margin: 0 !important;
 }
 

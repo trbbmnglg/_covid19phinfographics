@@ -16,6 +16,6 @@ library(extrafont)
 if(Sys.info()[['sysname']] ==
   'Linux'){
   dir.create('~/.fonts')
-  file.copy("www/fonts/IMPACT.TTF", "~/.fonts")
+  file.copy("www/fonts/Oswald-VariableFont_wght.ttf", "~/.fonts")
   system('fc-cache -f ~/.fonts')
 }
