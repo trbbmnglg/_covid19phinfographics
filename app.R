@@ -1,14 +1,15 @@
 source("includes.R")
 
 #Initialize dataset directory
-tmpshot <- fileSnapshot("_datasets/_2020-05/")
+dataSetDir <- "_datasets/_2020-05/"
+tmpshot <- fileSnapshot(dataSetDir)
 
 #Get latest file from directory
 file <- rownames(tmpshot$info[which.max(tmpshot$info$mtime),])
-latestFile <- paste("_datasets/_2020-05/",file,sep="")
-coviddatasets <- read.csv(latestFile, header=TRUE,sep=",",quote="\"")
+latestFile <- paste(dataSetDir,file,sep="")
+coviddatasets <- read_csv(latestFile)
 
-
+coviddatasets
 #Extract date from file name
 asofDate <- regexpr("([0-9]{8})", file)
 asofDate <- regmatches(file, asofDate)
@@ -18,18 +19,22 @@ asofDate <- format.Date(asofDate, "%B %d, %Y")
 
 #Extract only needed column
 coviddata <- coviddatasets %>%
-  select(Sex,Age,AgeGroup,RegionRes,HealthStatus,DateRepConf) %>%
+  select(Sex,Age,AgeGroup,RegionRes,HealthStatus,DateRepConf, Pregnanttab) %>%
   arrange(desc(Age))
 
 
-#MinAge
-youngest <- min(coviddata$Age, na.rm = TRUE)
+#Age select and calculation
+age <- coviddatasets %>%
+  select(Age) %>%
+  filter(!is.na(Age)) %>%
+  summarize(
+        AverageAge = round(mean(Age),0),
+        Oldest = max(Age),
+        Youngest = min(Age)
+      )
+oldest <- age$Oldest
+AverageAge <- age$AverageAge
 
-#MaxAge
-oldest <- max(coviddata$Age, na.rm = TRUE)
-
-#Mid Age
-medAge <- median(coviddata$Age, na.rm= TRUE)
 
 #Heatlh Status of the cases
 table(coviddata$HealthStatus)
@@ -106,7 +111,7 @@ covidTrend$DateRepConf <- as.Date( covidTrend$DateRepConf, '%Y-%m-%d')
 covidTrend <- covidTrend %>%
   ggplot(aes(DateRepConf, n )) +
   geom_area(fill="#FDA7DF", alpha=0.5) +
-  geom_line(color="#D980FA", size=1, alpha=0.9, linetype=1) +
+  geom_line(color="#D980FA", size=.5, alpha=0.9, linetype=1) +
   scale_x_date(expand = c(0, 0)) +
   theme_ipsum(
     grid_col = "#FDA7DF",
@@ -121,7 +126,7 @@ covidTrend <- covidTrend %>%
     axis.title.y = element_text(colour = "#FDA7DF"),
     plot.background = element_rect(fill = "#fde9f6ad", color="#fde9f6ad"),
     plot.margin = margin(0,0,0,0),
-    plot.title = element_text(family="Oswald", colour="#D980FA", size="40",hjust = 0.5)) +
+    plot.title = element_text(family="Oswald", face="plain",colour="#D980FA", size="40",hjust = 0.5)) +
   labs(x="Month", y="# of cases", title="cases over time") +
   ylim(0, 600)
 aspect_ratio <- 2.5
@@ -150,6 +155,13 @@ showRegCount <- ggplot(regCount, aes(x="", y=CaseCount, fill=Region)) +
   ) +
   ggtitle("top 5 region")
 ggsave("www/plots/region.png", width = 16, height = 12, dpi = "screen", units = "cm", device="png")
+
+
+#Count of Pregnant Cases
+pregnantCount <- coviddatasets %>%
+  select(Pregnanttab) %>%
+ filter(Pregnanttab=="Yes") %>%
+  count(Pregnanttab)
 
 #Call server to display stuffs
 server <- function(input, output, session) {
@@ -202,14 +214,20 @@ server <- function(input, output, session) {
     {asofDate}
   })
   
-  #Output highest case region
-  output$regionHighNum <- renderText({
-    {highCasereg$n}
-  })
+  #Output oldest case age
+  output$oldestCaseAge <- renderText({
+    {oldest}
+  })  
   
-  output$regionHighName <- renderText({
-    {highCasereg$RegionRes}
-  })
+  #Output count of pregrnant cases
+  output$pregnantCount <- renderText({
+    {pregnantCount$n}
+  })    
+  
+  #Output average of cases
+  output$AverageAge <- renderText({
+    {AverageAge}
+  }) 
   
   #Output modal
   shinyalert(

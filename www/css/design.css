@@ -71,8 +71,6 @@ body {
 	top: 2;
 }
 
-	
-
 #new{
 	background:#8b82ff;
 	color: #3f4fc1;
@@ -80,6 +78,7 @@ body {
 	font-size: 4.4vw;
 	margin: 0 !important;
 }
+
 #newText{
 	background: #a29bfe;
 	color: #FFF;
@@ -87,8 +86,18 @@ body {
 	font-size: 4.4vw;
 	margin: 0 !important;
 }
+
+#newText img{
+	vertical-align: middle;
+}
+
+#newText img{
+	width: 60px;
+	height: 60px;
+}
   
-#oldest{
+/* For Old Case */
+#oldest, #oldest2{
 	height: auto;
 	background: #dfe6e9;
 	color: #636e72;
@@ -97,25 +106,10 @@ body {
 	margin: 0 !important;
 }
 
-#old-text{
-   display: inline-block;
-   vertical-align: middle;
+#oldest2 img{
+	width: 60px;
+	height: 60px;
 }
-#oldestCasetop, #oldestCase, #oldestCasebot {
-   text-align:center;
-   line-height:90%;
-}
-#oldestCasetop, #oldestCasebot{
-    font-size: 2vw;   
-}
-
-#old-img{
-	display: inline-block;
-	margin-top: 5%;
-	margin-bottom: 5%;
-	vertical-align: middle;
-}
-
 
 /* For Gender */
 #gender{
@@ -169,6 +163,49 @@ body {
 	color: #d63031;
 }
 
+/*Pregnant Count*/
+#pregnant{
+	font-family: Oswald;
+	margin: 0 !important;
+}
+
+#pregnantCaseCount{
+	color: #e77587b3;
+    font-family: Oswald;
+    font-size: 4.4vw;
+    margin: 0 !important;
+    line-height: 1;
+    vertical-align: middle;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+}
+
+#pregnantCount{
+	font-size: 7vw !important;
+}
+
+/*Average Age*/
+#avgAge{
+	font-family: Oswald;
+	margin: 0 !important;
+}
+
+#AverageAgeShow{
+	color: #5cbd88;
+    font-family: Oswald;
+    font-size: 4.4vw;
+    margin: 0 !important;
+    line-height: 1;
+    vertical-align: middle;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+}
+#AverageAgeShow #AverageAge{
+	font-size: 7vw;
+	color: #59b583;
+}
 
 /*Pop-up modal*/
 button.confirm {
@@ -177,6 +214,10 @@ button.confirm {
 
 @media screen and (min-width: 400px) {
 	#recovered img{
+		max-width: 30px !important;
+		height: auto !important;		
+	}
+	#newText img{
 		max-width: 30px !important;
 		height: auto !important;		
 	}
@@ -196,11 +237,29 @@ button.confirm {
 		max-width: 100%;
 		height: auto;
 	}
+	#oldest{
+		text-align: center;
+	}
+	#oldest2 img{
+		max-width: 30px !important;
+		height: auto !important;
+	}
+	#oldest2{
+		text-align: center;
+	}
+	#pregnantCaseCount img{
+		max-width: 30px !important;
+		height: auto !important;
+	}
 }
 
 /* Larger than desktop */
 @media screen and (min-width: 1000px) {
 	#recovered img{
+		max-width: 60px !important;
+		height: auto !important;		
+	}
+	#newText img{
 		max-width: 60px !important;
 		height: auto !important;		
 	}
@@ -219,5 +278,19 @@ button.confirm {
 	#showRegCount img {
 		max-width: 100%;
 		height: auto;
+	}
+	#oldest{
+		text-align: right;
+	}
+	#oldest2 img{
+		max-width: 60px !important;
+		height: auto !important;
+	}
+	#oldest2{
+		text-align: left;
+	}
+	#pregnantCaseCount img{
+		max-width: 60px !important;
+		height: auto !important;
 	}
 }
