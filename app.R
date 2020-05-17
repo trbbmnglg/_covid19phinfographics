@@ -39,7 +39,7 @@ Sys.setenv(TZ="Asia/Manila")
 getDate <- format(Sys.time(), "%H")
 getDate <- as.integer(getDate)
 getDate
-if (getDate >= 18) {
+if (getDate >= 16) {
   newtoday <- Sys.Date()
   newtoday
 } else {
@@ -66,7 +66,8 @@ countofCases <- count(coviddata)
 
 
 #Count of Total Deaths
-totalDeaths <- coviddatasets %>% 
+totalDeaths <- coviddatasets %>%
+  select(HealthStatus) %>%
   filter(HealthStatus=="Died") %>%
   count(HealthStatus)
 
@@ -91,15 +92,11 @@ femalePercentage <- paste(femalePercentage,"%",sep="")
 
 #Region with least case
 leastCasereg <- coviddatasets %>% 
+  select(RegionRes) %>%
   count(RegionRes) %>%
   arrange(n) %>%
   top_n(-1)
 
-
-#Region with highest case
-highCasereg <- coviddatasets %>% 
-  count(RegionRes) %>%
-  top_n(1)
 
 #Monthly Trend
 covidTrend <- coviddata %>%
@@ -135,7 +132,8 @@ ggsave("www/plots/covidtrend.png", width = 16, height = 12, dpi = "screen", unit
 nb.cols <- 20
 mycolors <- colorRampPalette(brewer.pal(8, "Set2"))(nb.cols)
 
-regCount <- coviddatasets %>% 
+regCount <- coviddatasets %>%
+  select(RegionRes) %>%
   group_by(RegionRes) %>%
   summarise(CaseCount=n()) %>%
   top_n(5) %>%
@@ -216,14 +214,14 @@ server <- function(input, output, session) {
   #Output modal
   shinyalert(
     title = "Thanks for visiting!",
-    text = paste("Current data is as of",asofDate,sep=" "),
+    text = paste("Current data is as of ",asofDate),
     closeOnEsc = TRUE,
     closeOnClickOutside = FALSE,
     html = FALSE,
     type = "info",
     showConfirmButton = TRUE,
     showCancelButton = FALSE,
-    confirmButtonText = "I understand",
+    confirmButtonText = "I understand.",
     confirmButtonCol = "#AEDEF4",
     timer = 0,
     imageUrl = "",
