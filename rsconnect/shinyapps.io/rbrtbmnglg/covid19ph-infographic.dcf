@@ -5,9 +5,9 @@ account: rbrtbmnglg
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 2277674
-bundleId: 3158163
+bundleId: 3159723
 url: https://rbrtbmnglg.shinyapps.io/covid19ph-infographic/
-when: 1589726633.06629
+when: 1589767676.86259
 asMultiple: FALSE
 asStatic: FALSE
 ignoredFiles: .RData|LICENSE|README.md|.github/ISSUE_TEMPLATE/bug_report.md|.github/ISSUE_TEMPLATE/feature_request.md
