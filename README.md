@@ -3,7 +3,7 @@ Simple one-page, infographics written in R and Shiny using the latest available 
 
 Visit the infographics here https://rbrtbmnglg.shinyapps.io/covid19ph-infographic/
 <br><br>
-[![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](http://shields.io/)
+[![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](https://rbrtbmnglg.shinyapps.io/covid19ph-infographic/)
 
 ## Updates
 
@@ -20,7 +20,7 @@ Visit the infographics here https://rbrtbmnglg.shinyapps.io/covid19ph-infographi
 - Two plots are added.
    - cases over time (line graph)
    - top 5 region (pie graph)
-- Suppored both desktop and mobile display.
+- Supported both desktop and mobile display.
 - Tested display on mobile with < 400px width.
 - Info modal is displayed upon entering the page to inform visitor on the latest data date.
 

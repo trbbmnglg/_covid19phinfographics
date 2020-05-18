@@ -9,19 +9,20 @@ file <- rownames(tmpshot$info[which.max(tmpshot$info$mtime),])
 latestFile <- paste(dataSetDir,file,sep="")
 coviddatasets <- read_csv(latestFile)
 
-coviddatasets
 #Extract date from file name
 asofDate <- regexpr("([0-9]{8})", file)
 asofDate <- regmatches(file, asofDate)
 asofDate <- as.Date(asofDate,"%Y%m%d")
 asofDate <- format.Date(asofDate, "%B %d, %Y")
 
-
 #Extract only needed column
 coviddata <- coviddatasets %>%
   select(Sex,Age,AgeGroup,RegionRes,HealthStatus,DateRepConf, Pregnanttab) %>%
   arrange(desc(Age))
 
+#Format Date Rep since it has a heterogeneous format (use lubridate) 
+coviddata$DateRepConf <- parse_date_time(coviddata$DateRepConf,"d/m/y")
+coviddata$DateRepConf <- as.Date(coviddata$DateRepConf,format="%m/%d/%Y")
 
 #Age select and calculation
 age <- coviddatasets %>%
@@ -35,32 +36,26 @@ age <- coviddatasets %>%
 oldest <- age$Oldest
 AverageAge <- age$AverageAge
 
-
-#Heatlh Status of the cases
-table(coviddata$HealthStatus)
-
 #Latest case for the current date
 Sys.setenv(TZ="Asia/Manila")
-getDate <- format(Sys.time(), "%H")
-getDate <- as.integer(getDate)
-getDate
-if (getDate >= 16) {
+getCurrentTime <- format(Sys.time(), "%H")
+getCurrentTime <- as.integer(getCurrentTime)
+getCurrentTime
+if (getCurrentTime > 15) {
   newtoday <- Sys.Date()
-  newtoday
 } else {
   newtoday <- Sys.Date() - 1
-  newtoday
 }
 
 newCase <- table(coviddata$DateRepConf)
+newCase
 newCase <- newCase[names(newCase)==newtoday]
-
+newCase
 if(length(newCase) == 0){
   newCase <- "data outdated"
 } else{
   newCase <- as.character(newCase)
 }
-
 
 #Recovered
 recovered <- table(coviddata$HealthStatus)
@@ -69,13 +64,11 @@ recovered <- recovered["Recovered"]
 #Total count of cases
 countofCases <- count(coviddata)
 
-
 #Count of Total Deaths
 totalDeaths <- coviddatasets %>%
   select(HealthStatus) %>%
   filter(HealthStatus=="Died") %>%
   count(HealthStatus)
-
 
 #Gender Percentage
 genderPerCentage <- coviddatasets %>% 
@@ -102,15 +95,12 @@ leastCasereg <- coviddatasets %>%
   arrange(n) %>%
   top_n(-1)
 
-
 #Monthly Trend
 covidTrend <- coviddata %>%
   select(DateRepConf) %>%
   count(DateRepConf)
-covidTrend$DateRepConf <- as.Date( covidTrend$DateRepConf, '%Y-%m-%d')
 covidTrend <- covidTrend %>%
   ggplot(aes(DateRepConf, n )) +
-  #geom_area(fill="#FDA7DF", alpha=0.5) +
   geom_line(color="#D980FA", size=1, alpha=0.9, linetype=1) +
   scale_x_date(expand = c(0, 0)) +
   theme_ipsum(
@@ -131,7 +121,6 @@ covidTrend <- covidTrend %>%
   ylim(0, 600)
 aspect_ratio <- 2.5
 ggsave("www/plots/covidtrend.png", width = 16, height = 12, dpi = "screen", units = "cm", device="png")
-
 
 #Generate Pie chart for count per Region
 nb.cols <- 20
@@ -156,16 +145,15 @@ showRegCount <- ggplot(regCount, aes(x="", y=CaseCount, fill=Region)) +
   ggtitle("top 5 region")
 ggsave("www/plots/region.png", width = 16, height = 12, dpi = "screen", units = "cm", device="png")
 
-
 #Count of Pregnant Cases
 pregnantCount <- coviddatasets %>%
   select(Pregnanttab) %>%
  filter(Pregnanttab=="Yes") %>%
   count(Pregnanttab)
 
+
 #Call server to display stuffs
 server <- function(input, output, session) {
-  
   
   #Output Region with Highest case
   output$highCasereg <- renderText({
@@ -182,12 +170,10 @@ server <- function(input, output, session) {
     {paste(format(recovered, nsmall=1, big.mark=",")," recoveries",sep=" ")}
   })
   
-  
   #Output Total Deaths
   output$died <- renderText({
     {paste(format(totalDeaths$n, nsmall=1, big.mark=","),"died", sep=" ")}
   })
-  
   
   #Output New Case
   output$newCase <- renderText({
