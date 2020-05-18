@@ -110,8 +110,8 @@ covidTrend <- coviddata %>%
 covidTrend$DateRepConf <- as.Date( covidTrend$DateRepConf, '%Y-%m-%d')
 covidTrend <- covidTrend %>%
   ggplot(aes(DateRepConf, n )) +
-  geom_area(fill="#FDA7DF", alpha=0.5) +
-  geom_line(color="#D980FA", size=.5, alpha=0.9, linetype=1) +
+  #geom_area(fill="#FDA7DF", alpha=0.5) +
+  geom_line(color="#D980FA", size=1, alpha=0.9, linetype=1) +
   scale_x_date(expand = c(0, 0)) +
   theme_ipsum(
     grid_col = "#FDA7DF",

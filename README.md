@@ -1,36 +1,31 @@
 ## COVID-19 PH Infographics
-Simple infographics written in R and Shiny using the latest available datasets of COVID-19 cases in PH provided by DOH in their website http://www.doh.gov.ph/2019-nCoV.
+Simple one-page, infographics written in R and Shiny using the latest available datasets of COVID-19 cases in PH provided by DOH on their public storage.
+
+Visit the infographics here https://rbrtbmnglg.shinyapps.io/covid19ph-infographic/
+<br><br>
+[![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](http://shields.io/)
 
 ## Updates
 
-### 2020-05-11
-- Initial deployment.
-- Initial repo.
-- Added 05/11 datasets
-- Change static dates.
-- Updated footer.
-- Fixed "Oldest Case"
+### :ear_of_rice: v1.0.0 Abra
+- Selected cases information are displayed:
+   - total # of cases
+   - total # of deaths
+   - total # of recoveries
+   - total # of new cases (based on the latest dataset on the page not based on the latest dataset by DOH)
+   - gender percentage
+   - oldest age
+   - average age
+   - total # of pregnant
+- Two plots are added.
+   - cases over time (line graph)
+   - top 5 region (pie graph)
+- Suppored both desktop and mobile display.
+- Tested display on mobile with < 400px width.
+- Info modal is displayed upon entering the page to inform visitor on the latest data date.
 
-### 2020-05-12
-- Dynamic reading of datasets.
-- Dynamic dataset file name in footer.
-- Dynamic counting of new cases.
-- Added two Region stats.
-- Fix some text size on different screens.
+## License
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/rbrtbmnglg/_covid19phinfographics/blob/master/LICENSE)
 
-### 2020-05-14 
-- Added 2020-05-13 datasets
-- Added 2020-05-14 datasets
-- Added new block for total count of deaths
-- Updated the design
-- Added new attribution in the footer
-- Fix display of new case once data is outdated
-- Added Monthly trend graph
-- Fix new case logic
 
-### 2020-05-17
-- Added 2020-05-16 datasets
-- Fixed responsive design
-- Remove oldest
-- Redesined gender %
-- Added two plots
+[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
