@@ -6,7 +6,6 @@ Visit the infographics here https://rbrtbmnglg.shinyapps.io/covid19ph-infographi
 [![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](https://rbrtbmnglg.shinyapps.io/covid19ph-infographic/)
 
 ## Updates
-
 ### :ear_of_rice: v1.0.0 Abra
 - Selected cases information are displayed:
    - total # of cases
@@ -23,6 +22,14 @@ Visit the infographics here https://rbrtbmnglg.shinyapps.io/covid19ph-infographi
 - Supported both desktop and mobile display.
 - Tested display on mobile with < 400px width.
 - Info modal is displayed upon entering the page to inform visitor on the latest data date.
+
+### :ear_of_rice: v1.0.1 Abra
+- Added new cases information:
+   - total # of new deaths
+   - total # of new recoveries
+- Implemented lubridate on two date columns
+- New design for the new cases stats
+- Added corona icon on top of the header title
 
 ## License
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/rbrtbmnglg/_covid19phinfographics/blob/master/LICENSE)
