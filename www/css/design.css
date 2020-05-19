@@ -71,31 +71,84 @@ body {
 	top: 2;
 }
 
+/* New Cases */
 #new{
-	background:#8b82ff;
-	color: #3f4fc1;
+	background:#d78ff9;
+	color: #821eb4;
 	font-family: Oswald;
 	font-size: 4.4vw;
 	margin: 0 !important;
 }
 
 #newText{
-	background: #a29bfe;
-	color: #FFF;
+	background: #d78ff9;
+	color: #821eb4;
 	font-family: Oswald;
 	font-size: 4.4vw;
 	margin: 0 !important;
 }
 
-#newText img{
+#new img{
 	vertical-align: middle;
 }
 
-#newText img{
+#new img{
 	width: 60px;
 	height: 60px;
 }
-  
+
+/* New Recovery */
+#newRecoveries{
+	background:#fed2a48a;
+	color: #ffbd86;
+	font-family: Oswald;
+	font-size: 4.4vw;
+	margin: 0 !important;
+}
+
+#newTextRecoveries{
+	background: #fed2a48a;
+	color: #ffbd86;
+	font-family: Oswald;
+	font-size: 4.4vw;
+	margin: 0 !important;
+}
+
+#newRecoveries img{
+	vertical-align: middle;
+}
+
+#newRecoveries img{
+	width: 60px;
+	height: 60px;
+}
+ 
+/* New Deaths */
+#newDeath{
+	background: #cec4c6;
+	color: #9e8f92;
+	font-family: Oswald;
+	font-size: 4.4vw;
+	margin: 0 !important;
+}
+
+#newTextDeath{
+	background: #cec4c6;
+	color: #9e8f92;
+	font-family: Oswald;
+	font-size: 4.4vw;
+	margin: 0 !important;
+}
+
+#newDeath img{
+	vertical-align: middle;
+}
+
+#newDeath img{
+	width: 60px;
+	height: 60px;
+} 
+
 /* For Old Case */
 #oldest, #oldest2{
 	height: auto;
@@ -139,25 +192,18 @@ body {
 #monthly{
 	font-family: Oswald;
 	margin: 0 !important;
+	height: 351px !important;
 }
-
-#monthlyCovidTrend img {
-    width: 460px;
-    height: auto;
+#monthlyCovidTrend, #showRegCount{
+	margin: 0 !important;
+	height: auto;
 }
-
-
 /*Region Count*/
 #regionCount{
 	font-family: Oswald;
 	margin: 0 !important;
+	height: 351px !important;
 }
-
-#showRegCount img {
-    width: 460px;
-    height: auto;
-}
-
 
 #heart{
 	color: #d63031;
@@ -217,9 +263,17 @@ button.confirm {
 		max-width: 30px !important;
 		height: auto !important;		
 	}
-	#newText img{
+	#new img, #newRecoveries img, #newDeath img{
 		max-width: 30px !important;
-		height: auto !important;		
+		height: auto !important;
+		margin-bottom: 5px;
+	}
+	#newTextDeath, #newTextRecoveries, #newText {
+		text-align: center !important;
+	}
+
+	#new, #newRecoveries, #newDeath{
+		text-align: center !important;
 	}
 	#man img{
 		max-width: 40px !important;
@@ -259,9 +313,18 @@ button.confirm {
 		max-width: 60px !important;
 		height: auto !important;		
 	}
-	#newText img{
+	#new img, #newRecoveries img, #newDeath img{
 		max-width: 60px !important;
-		height: auto !important;		
+		height: auto !important;	
+		margin-bottom: 5px;
+	}
+	#newTextDeath, #newTextRecoveries, #newText {
+		text-align: right !important;
+	}
+
+	#new, #newRecoveries, #newDeath{
+		text-align: left !important;
+		padding-left: 15px !important;
 	}
 	#man img{
 		max-width: 60px !important;

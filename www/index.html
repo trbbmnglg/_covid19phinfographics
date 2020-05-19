@@ -34,7 +34,7 @@
   <div class="container" style="vertical-align:center;text-align:center;">
     <div class="row">
       <div class="eleven columns" style="margin-top: 3%;">
-        <div id="big-heading">COVID-19 PH INFOGRAPHICS</div>
+        <img src="icons/covid.png" width="65" height="65" alt="COVID-19 PH INFOGRAPHICS"/> <div id="big-heading">COVID-19 PH INFOGRAPHICS</div>
       </div>
     </div>
 
@@ -61,31 +61,55 @@
 		</div>
 		<div class="seven columns" id="recovered">
 			<span id="recovery" class="shiny-text-output"></span>
-			<img src="first-aid.png"/>
+			<img src="icons/first-aid.png"/>
 		</div>
     </div>
 
   <!-- Display count of latest cases
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->	
 	<div class="row">
-		<div class="seven columns" id="newText"><img src="bacteria.png"/> new cases</div>
-		<div class="five columns" id="new">
+		<div class="five columns" id="newText">
 			<span id="newCase" class="shiny-text-output"></span>
 		</div>
+		<div class="seven columns" id="new">
+			<img src="icons/bacteria.png" height="60" width="60"/> new cases
+		</div>
     </div>
-
+	
+  <!-- Display count of new deaths
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->	
+	<div class="row">
+		<div class="five columns" id="newTextRecoveries">
+			<span id="newRecovery" class="shiny-text-output"></span>
+		</div>
+		<div class="seven columns" id="newRecoveries">
+			<img src="icons/plaster.png" height="60" width="60"/> new recoveries
+		</div>
+    </div>
+	
+  <!-- Display count of new deaths
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->	
+	<div class="row">
+		<div class="five columns" id="newTextDeath">
+			<span id="newDeaths" class="shiny-text-output"></span>
+		</div>
+		<div class="seven columns" id="newDeath">
+			<img src="icons/deceased.png" height="60" width="60"/> new deaths
+		</div>
+    </div>
+	
   <!-- Display gender percentage of cases
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->	
 	<div class="row">
 		<div class="six columns" id="gender">
 			<div id="woman">
-				<img src="woman.png"/>
+				<img src="icons/woman.png"/>
 				<span id="fPercent" class="shiny-text-output"></span>
 			</div>	
 		</div>
 		<div class="six columns" id="gender">
 			<div id="man">
-				<img src="man.png"/>
+				<img src="icons/man.png"/>
 				<span id="mPercent" class="shiny-text-output"></span>
 			</div>	
 		</div>
@@ -118,7 +142,7 @@
 			<div id="oldestCase">
 			 &nbsp;
 			 <span id="oldestCaseAge" class="shiny-text-output"></span>
-			 <img src="old.png"/>
+			 <img src="icons/old.png"/>
 			 yrs. old
 			</div>	
 		</div>
@@ -130,14 +154,14 @@
 		<div class="six columns" id="pregnant">
 			<div id="pregnantCaseCount">
 				<span id="pregnantCount" class="shiny-text-output"></span>
-				<img src="pregnant.png" width="60" height="60"/>
+				<img src="icons/pregnant.png" width="60" height="60"/>
 				PREGNANTS
 			</div>	
 		</div>
 		<div class="six columns" id="avgAge">
 			<div id="AverageAgeShow">
 				<span id="AverageAge" class="shiny-text-output"></span> 
-				AVG. AGE
+				AVERAGE AGE
 			</div>	
 		</div>
 	</div>

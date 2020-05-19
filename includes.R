@@ -22,3 +22,5 @@ if(Sys.info()[['sysname']] ==
   file.copy("www/fonts/Oswald-VariableFont_wght.ttf", "~/.fonts")
   system('fc-cache -f ~/.fonts')
 }
+
+Sys.setenv(TZ="Asia/Manila")

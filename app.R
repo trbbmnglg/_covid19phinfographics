@@ -12,17 +12,21 @@ coviddatasets <- read_csv(latestFile)
 #Extract date from file name
 asofDate <- regexpr("([0-9]{8})", file)
 asofDate <- regmatches(file, asofDate)
-asofDate <- as.Date(asofDate,"%Y%m%d")
-asofDate <- format.Date(asofDate, "%B %d, %Y")
+orig_asofDate <- as.Date(asofDate,"%Y%m%d")
+asofDate <- format.Date(orig_asofDate, "%B %d, %Y")
 
 #Extract only needed column
 coviddata <- coviddatasets %>%
-  select(Sex,Age,AgeGroup,RegionRes,HealthStatus,DateRepConf, Pregnanttab) %>%
+  select(Sex,Age,AgeGroup,RegionRes,HealthStatus,DateRepConf, Pregnanttab, RemovalType, DateRepRem) %>%
   arrange(desc(Age))
 
-#Format Date Rep since it has a heterogeneous format (use lubridate) 
-coviddata$DateRepConf <- parse_date_time(coviddata$DateRepConf,"d/m/y")
+#Format Date Rep Conf since it has a heterogeneous format (use lubridate) 
+coviddata$DateRepConf <- parse_date_time(coviddata$DateRepConf,c("dmY", "ymd"))
 coviddata$DateRepConf <- as.Date(coviddata$DateRepConf,format="%m/%d/%Y")
+
+#Format Date Rep Remove since it has a heterogeneous format (use lubridate) 
+coviddata$DateRepRem <- parse_date_time(coviddata$DateRepRem,c("dmY", "ymd"))
+coviddata$DateRepRem <- as.Date(coviddata$DateRepRem,format="%m/%d/%Y")
 
 #Age select and calculation
 age <- coviddatasets %>%
@@ -36,26 +40,25 @@ age <- coviddatasets %>%
 oldest <- age$Oldest
 AverageAge <- age$AverageAge
 
-#Latest case for the current date
-Sys.setenv(TZ="Asia/Manila")
-getCurrentTime <- format(Sys.time(), "%H")
-getCurrentTime <- as.integer(getCurrentTime)
-getCurrentTime
-if (getCurrentTime > 15) {
-  newtoday <- Sys.Date()
-} else {
-  newtoday <- Sys.Date() - 1
-}
-
+#Latest case for the latest availabe dataset
+newtoday <- orig_asofDate
 newCase <- table(coviddata$DateRepConf)
-newCase
 newCase <- newCase[names(newCase)==newtoday]
-newCase
-if(length(newCase) == 0){
-  newCase <- "data outdated"
-} else{
-  newCase <- as.character(newCase)
-}
+
+#Count of new deaths and recovery for the latest availabe dataset
+newCounts <-coviddata %>%
+  select(DateRepRem, RemovalType) %>%
+  filter(DateRepRem==newtoday) %>%
+  group_by(RemovalType) %>%
+  summarise(NewCounts = n())
+
+#New Deaths
+newDeaths <- newCounts[newCounts$RemovalType=="Died","NewCounts"]
+newDeaths <- newDeaths$NewCounts
+
+#New Recoveries
+newRecovery <- newCounts[newCounts$RemovalType=="Recovered","NewCounts"]
+newRecovery <- newRecovery$NewCounts
 
 #Recovered
 recovered <- table(coviddata$HealthStatus)
@@ -120,7 +123,7 @@ covidTrend <- covidTrend %>%
   labs(x="Month", y="# of cases", title="cases over time") +
   ylim(0, 600)
 aspect_ratio <- 2.5
-ggsave("www/plots/covidtrend.png", width = 16, height = 12, dpi = "screen", units = "cm", device="png")
+ggsave("www/plots/covidtrend.png", width = 17, height = 13, dpi = 72, units = "cm", device="png")
 
 #Generate Pie chart for count per Region
 nb.cols <- 20
@@ -143,13 +146,14 @@ showRegCount <- ggplot(regCount, aes(x="", y=CaseCount, fill=Region)) +
         plot.title = element_text(family="Oswald", colour="#66c2a5", size="40",hjust = 0.5)
   ) +
   ggtitle("top 5 region")
-ggsave("www/plots/region.png", width = 16, height = 12, dpi = "screen", units = "cm", device="png")
+ggsave("www/plots/region.png", width = 17, height = 13, dpi = 72, units = "cm", device="png")
 
 #Count of Pregnant Cases
 pregnantCount <- coviddatasets %>%
   select(Pregnanttab) %>%
  filter(Pregnanttab=="Yes") %>%
   count(Pregnanttab)
+
 
 
 #Call server to display stuffs
@@ -200,12 +204,22 @@ server <- function(input, output, session) {
     {asofDate}
   })
   
+  #Output latest # of deaths
+  output$newDeaths <- renderText({
+    {newDeaths}
+  })
+
+  #Output latest # of deaths
+  output$newRecovery <- renderText({
+    {newRecovery}
+  })  
+  
   #Output oldest case age
   output$oldestCaseAge <- renderText({
     {oldest}
   })  
   
-  #Output count of pregrnant cases
+  #Output count of pregnant cases
   output$pregnantCount <- renderText({
     {pregnantCount$n}
   })    

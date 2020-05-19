@@ -3,5 +3,8 @@
 .RData
 .Ruserdata
 
-# Shiny token, see https://shiny.rstudio.com/articles/shinyapps.html
-rsconnect/
+# Don't include dcf
+rsconnect/shinyapps.io/rbrtbmnglg/*
+
+# Don't upload plots
+www/pots/*
