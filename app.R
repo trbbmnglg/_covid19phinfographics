@@ -104,7 +104,8 @@ covidTrend <- coviddata %>%
   count(DateRepConf)
 covidTrend <- covidTrend %>%
   ggplot(aes(DateRepConf, n )) +
-  geom_line(color="#D980FA", size=1, alpha=0.9, linetype=1) +
+  geom_line(color="#D980FA", size=1,  linetype=1) +
+  geom_area(fill="#D980FB", alpha=0.5) +
   scale_x_date(expand = c(0, 0)) +
   theme_ipsum(
     grid_col = "#FDA7DF",
@@ -117,10 +118,10 @@ covidTrend <- covidTrend %>%
     axis.text.x = element_text(colour = "#D980FA"),
     axis.title.x = element_text(margin = margin(r = 50), colour = "#FDA7DF"),
     axis.title.y = element_text(colour = "#FDA7DF"),
-    plot.background = element_rect(fill = "#fde9f6ad", color="#fde9f6ad"),
+    plot.background = element_rect(fill = "#FFFFFF", color="#FFFFFF"),
     plot.margin = margin(0,0,0,0),
     plot.title = element_text(family="Oswald", face="plain",colour="#D980FA", size="40",hjust = 0.5)) +
-  labs(x="Month", y="# of cases", title="cases over time") +
+  labs(x="", y="# of cases", title="cases over time") +
   ylim(0, 600)
 aspect_ratio <- 2.5
 ggsave("www/plots/covidtrend.png", width = 17, height = 13, dpi = 72, units = "cm", device="png")

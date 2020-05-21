@@ -275,11 +275,8 @@ button.confirm {
 	#new, #newRecoveries, #newDeath{
 		text-align: center !important;
 	}
-	#man img{
-		max-width: 40px !important;
-		height: auto !important;
-	}
-	#woman img{
+	#man img, #woman img{	
+		margin-top: 8px;
 		max-width: 40px !important;
 		height: auto !important;
 	}
@@ -326,11 +323,7 @@ button.confirm {
 		text-align: left !important;
 		padding-left: 15px !important;
 	}
-	#man img{
-		max-width: 60px !important;
-		height: auto !important;
-	}
-	#woman img{
+	#man img, #woman img{
 		max-width: 60px !important;
 		height: auto !important;
 	}
