@@ -31,6 +31,21 @@ Visit the infographics here https://rbrtbmnglg.shinyapps.io/covid19ph-infographi
 - New design for the new cases stats
 - Added corona icon on top of the header title
 
+### :ear_of_rice: v2.0.0 Benguet
+- Complete redesigned:
+   - combined total and new
+   - changed layout
+- Added new cases information:
+   - total # of active cases
+   - total # of critical
+   - total # of severe
+   - total # of mild
+   - total # of asymptomatic
+- New plot
+   - death vs recovered time series linegraph
+- Removed top 5 reagion plot for now
+- Removed oldest case for now
+
 ## License
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/rbrtbmnglg/_covid19phinfographics/blob/master/LICENSE)
 

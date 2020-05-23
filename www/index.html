@@ -34,7 +34,7 @@
   <div class="container" style="vertical-align:center;text-align:center;">
     <div class="row">
       <div class="eleven columns" style="margin-top: 3%;">
-        <img src="icons/covid.png" width="65" height="65" alt="COVID-19 PH INFOGRAPHICS"/> <div id="big-heading">COVID-19 PH INFOGRAPHICS</div>
+        <div id="big-heading">COVID-19 PH INFOGRAPHICS</div>
       </div>
     </div>
 
@@ -44,111 +44,83 @@
 		data as of <span id="asofDate" class="shiny-text-output"></span>
     </div>
 
-  <!-- Display total count of cases
+  <!-- Display total count of cases and recoveries
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->	
-	<div class="row" style="margin-top: 2%">
-		<div class="six columns" id="countofCasesVal">
+	<div class="row" style="margin-top: 2%;">
+		<div class="six columns" id="confirmedcases">
+			<img src="icons/covid.png"/>
+			<div id="totalconfirmedcase">
 			<span id="countofCases" class="shiny-text-output"></span>
-		</div>
-		<div class="six columns" id="countofCasesText">total cases</div>
-    </div>
-
-  <!-- Display total count of deaths and recovery
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->	
-	<div class="row">
-		<div class="five columns" id="deaths">
-			<span id="died" class="shiny-text-output"></span>
-		</div>
-		<div class="seven columns" id="recovered">
-			<span id="recovery" class="shiny-text-output"></span>
-			<img src="icons/first-aid.png"/>
-		</div>
-    </div>
-
-  <!-- Display count of latest cases
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->	
-	<div class="row">
-		<div class="five columns" id="newText">
+			<span>total</span>
+			</div>
+			<div id="newconfirmedcase">
 			<span id="newCase" class="shiny-text-output"></span>
+			<span>new</span>
+			</div>
 		</div>
-		<div class="seven columns" id="new">
-			<img src="icons/bacteria.png" height="60" width="60"/> new cases
-		</div>
-    </div>
-	
-  <!-- Display count of new deaths
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->	
-	<div class="row">
-		<div class="five columns" id="newTextRecoveries">
+		
+		<div class="six columns" id="recoveries">
+			<img src="icons/plaster.png"/>
+			<div id="totalrecoveries">
+			<span id="recovery" class="shiny-text-output"></span>
+			<span>recovered</span>
+			</div>
+			<div id="newrecovery">
 			<span id="newRecovery" class="shiny-text-output"></span>
-		</div>
-		<div class="seven columns" id="newRecoveries">
-			<img src="icons/plaster.png" height="60" width="60"/> new recoveries
-		</div>
-    </div>
-	
-  <!-- Display count of new deaths
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->	
-	<div class="row">
-		<div class="five columns" id="newTextDeath">
-			<span id="newDeaths" class="shiny-text-output"></span>
-		</div>
-		<div class="seven columns" id="newDeath">
-			<img src="icons/deceased.png" height="60" width="60"/> new deaths
+			<span>new</span>
+			</div>
 		</div>
     </div>
-	
-  <!-- Display gender percentage of cases
+
+  <!-- Display active cases, gender percentage and count of deaths
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->	
 	<div class="row">
-		<div class="six columns" id="gender">
+		<div class="six columns" id="activecases">
+			<div class="row">
+				<div id="totalactivecase">
+				<span id="ActiveCase" class="shiny-text-output"></span>
+				<span>active</span>
+				</div>
+			</div>
+			<div class="row">
 			<div id="woman">
 				<img src="icons/woman.png"/>
 				<span id="fPercent" class="shiny-text-output"></span>
-			</div>	
-		</div>
-		<div class="six columns" id="gender">
+			</div>
 			<div id="man">
 				<img src="icons/man.png"/>
 				<span id="mPercent" class="shiny-text-output"></span>
-			</div>	
+			</div>
+			</div>
 		</div>
-	</div>	
+		
+		<div class="six columns" id="deaths">
+			<img src="icons/deceased.png"/>
+			<div id="totaldeaths">
+				<span id="died" class="shiny-text-output"></span>
+				<span>died</span>
+			</div>
+			<div id="newdeath">
+				<span id="newDeaths" class="shiny-text-output"></span>
+				<span>new</span>
+			</div>
+		</div>
+    </div>
 
-  <!-- Display generated image for case over time and pie chart of # of cases by region
+
+  <!-- Display generated image for case over time and deaths vs recoveries
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->	
 	<div class="row">
 		<div class="six columns" id="monthly">
-			<div id="monthlyCovidTrend">
-				<img src="plots/covidtrend.png"/>
-			</div>	
+			<img src="plots/covidtrend.png"/>
 		</div>
-		<div class="six columns" id="regionCount">
-			<div id="showRegCount">
-				<img src="plots/region.png"/>
-			</div>	
-		</div>
+		
+		<div class="six columns" id="recoveredvsdeath">
+			<img src="plots/recoveredvsdeath.png"/>
+		</div>		
 	</div>	
 
-  <!-- Display age of oldest case
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->	
-	<div class="row">
-		<div class="six columns" id="oldest">
-			<div id="oldestText">
-					oldest is
-			</div>	
-		</div>
-		<div class="six columns" id="oldest2">
-			<div id="oldestCase">
-			 &nbsp;
-			 <span id="oldestCaseAge" class="shiny-text-output"></span>
-			 <img src="icons/old.png"/>
-			 yrs. old
-			</div>	
-		</div>
-	</div>	
-	
-  <!-- Display count of pregnant cases and averge age of cases
+  <!-- Display generated image for case over time and deaths vs recoveries
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->	
 	<div class="row">
 		<div class="six columns" id="pregnant">
@@ -158,23 +130,53 @@
 				PREGNANTS
 			</div>	
 		</div>
+		
 		<div class="six columns" id="avgAge">
 			<div id="AverageAgeShow">
 				<span id="AverageAge" class="shiny-text-output"></span> 
 				AVERAGE AGE
 			</div>	
-		</div>
-	</div>
+		</div>		
+	</div>	
+	
+  <!-- Display health status
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->	
+	<div class="row">
+		<div class="six columns" id="healthstatus1">
+			<div class="row">
+			<div id="critical">
+				<span id="critical" class="shiny-text-output"></span>
+				<span>critical</span>
+			</div>
+			<div id="severe">
+				<span id="severe" class="shiny-text-output"></span>
+				<span>severe</span>
+			</div>
+			</div>
+		</div>	
+		
+		<div class="six columns" id="healthstatus2">
+			<div class="row">
+			<div id="mild">
+				<span id="mild" class="shiny-text-output"></span>
+				<span>mild</span>
+			</div>
+			<div id="asymptomatic">
+				<span id="asymptomatic" class="shiny-text-output"></span>
+				<span>asymptomatic</span>
+			</div>
+			</div>
+		</div>	
+	</div>	
 	
 	</br>
 	</br>
-
 	<div class="row">
-	<p>
-	Dataset used available in <a  href="http://www.doh.gov.ph/2019-nCoV" target="_blank">DOH</a> website.<br>
-	Icons made by <a href="https://www.flaticon.com/authors/freepik"  target="_blank">Freepik</a> from <a href="https://www.flaticon.com" target="_blank">www.flaticon.com</a><br>
-	Made with <span id="heart">❤</span> in R and Shiny. | <a href="https://github.com/rbrtbmnglg/_covid19phinfographics" target="_blank">GitHub<a>
-	</p>
+		<p>
+		Dataset used available in <a  href="http://www.doh.gov.ph/2019-nCoV" target="_blank">DOH</a> website.<br>
+		Icons made by <a href="https://www.flaticon.com/authors/freepik"  target="_blank">Freepik</a> from <a href="https://www.flaticon.com" target="_blank">www.flaticon.com</a><br>
+		Made with <span id="heart">❤</span> in R and Shiny. | <a href="https://github.com/rbrtbmnglg/_covid19phinfographics" target="_blank">GitHub<a>
+		</p>
 	</div>
   </div>
 <!-- End Document

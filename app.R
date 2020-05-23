@@ -19,6 +19,7 @@ asofDate <- format.Date(orig_asofDate, "%B %d, %Y")
 coviddata <- coviddatasets %>%
   select(Sex,Age,AgeGroup,RegionRes,HealthStatus,DateRepConf, Pregnanttab, RemovalType, DateRepRem) %>%
   arrange(desc(Age))
+coviddata
 
 #Format Date Rep Conf since it has a heterogeneous format (use lubridate) 
 coviddata$DateRepConf <- parse_date_time(coviddata$DateRepConf,c("dmY", "ymd"))
@@ -29,14 +30,14 @@ coviddata$DateRepRem <- parse_date_time(coviddata$DateRepRem,c("dmY", "ymd"))
 coviddata$DateRepRem <- as.Date(coviddata$DateRepRem,format="%m/%d/%Y")
 
 #Age select and calculation
-age <- coviddatasets %>%
+age <- coviddata %>%
   select(Age) %>%
   filter(!is.na(Age)) %>%
   summarize(
-        AverageAge = round(mean(Age),0),
-        Oldest = max(Age),
-        Youngest = min(Age)
-      )
+    AverageAge = round(mean(Age),0),
+    Oldest = max(Age),
+    Youngest = min(Age)
+  )
 oldest <- age$Oldest
 AverageAge <- age$AverageAge
 
@@ -60,21 +61,41 @@ newDeaths <- newDeaths$NewCounts
 newRecovery <- newCounts[newCounts$RemovalType=="Recovered","NewCounts"]
 newRecovery <- newRecovery$NewCounts
 
-#Recovered
-recovered <- table(coviddata$HealthStatus)
-recovered <- recovered["Recovered"]
-
 #Total count of cases
 countofCases <- count(coviddata)
 
-#Count of Total Deaths
-totalDeaths <- coviddatasets %>%
+#Health Status
+health <- coviddata %>%
   select(HealthStatus) %>%
-  filter(HealthStatus=="Died") %>%
-  count(HealthStatus)
+  group_by(HealthStatus) %>%
+  summarise(healthStatusCount = n())
+
+#Recovered
+recovered <- health[health$HealthStatus=="Recovered","healthStatusCount"]
+recovered <- recovered$healthStatusCount
+
+#Deaths
+totalDeaths <- health[health$HealthStatus=="Died","healthStatusCount"]
+totalDeaths <- totalDeaths$healthStatusCount
+
+#Critical
+critical <- health[health$HealthStatus=="Critical","healthStatusCount"]
+critical <- critical$healthStatusCount
+
+#Asymptomatic
+asymptomatic <- health[health$HealthStatus=="Asymptomatic","healthStatusCount"]
+asymptomatic <- asymptomatic$healthStatusCount
+
+#Mild
+mild <- health[health$HealthStatus=="Mild","healthStatusCount"]
+mild <- mild$healthStatusCount
+
+#Mild
+severe <- health[health$HealthStatus=="Severe","healthStatusCount"]
+severe <- severe$healthStatusCount
 
 #Gender Percentage
-genderPerCentage <- coviddatasets %>% 
+genderPerCentage <- coviddata %>% 
   group_by(Sex) %>%
   summarise(
     count = n(),
@@ -92,70 +113,19 @@ femalePercentage <- as.character(femalePercentage)
 femalePercentage <- paste(femalePercentage,"%",sep="")
 
 #Region with least case
-leastCasereg <- coviddatasets %>% 
+leastCasereg <- coviddata %>% 
   select(RegionRes) %>%
   count(RegionRes) %>%
   arrange(n) %>%
   top_n(-1)
 
-#Monthly Trend
-covidTrend <- coviddata %>%
-  select(DateRepConf) %>%
-  count(DateRepConf)
-covidTrend <- covidTrend %>%
-  ggplot(aes(DateRepConf, n )) +
-  geom_line(color="#D980FA", size=1,  linetype=1) +
-  geom_area(fill="#D980FB", alpha=0.5) +
-  scale_x_date(expand = c(0, 0)) +
-  theme_ipsum(
-    grid_col = "#FDA7DF",
-    axis_text_size=15,
-    axis_title_size=18,
-    axis_title_family="Oswald"
-  ) +
-  theme(
-    axis.text.y = element_text(colour = "#D980FA"),
-    axis.text.x = element_text(colour = "#D980FA"),
-    axis.title.x = element_text(margin = margin(r = 50), colour = "#FDA7DF"),
-    axis.title.y = element_text(colour = "#FDA7DF"),
-    plot.background = element_rect(fill = "#FFFFFF", color="#FFFFFF"),
-    plot.margin = margin(0,0,0,0),
-    plot.title = element_text(family="Oswald", face="plain",colour="#D980FA", size="40",hjust = 0.5)) +
-  labs(x="", y="# of cases", title="cases over time") +
-  ylim(0, 600)
-aspect_ratio <- 2.5
-ggsave("www/plots/covidtrend.png", width = 17, height = 13, dpi = 72, units = "cm", device="png")
-
-#Generate Pie chart for count per Region
-nb.cols <- 20
-mycolors <- colorRampPalette(brewer.pal(8, "Set2"))(nb.cols)
-
-regCount <- coviddatasets %>%
-  select(RegionRes) %>%
-  group_by(RegionRes) %>%
-  summarise(CaseCount=n()) %>%
-  top_n(5) %>%
-  rename("Region" = "RegionRes") %>%
-  arrange(desc(CaseCount))
-regCount$Region[regCount$Region==""]<-"Uncategorized"
-showRegCount <- ggplot(regCount, aes(x="", y=CaseCount, fill=Region)) +
-  geom_bar(stat="identity", width=1) +
-  coord_polar("y", start=0) + 
-  theme_void() +
-  scale_fill_manual(values = mycolors) +
-  theme(plot.margin = margin(0,0,0,0),
-        plot.title = element_text(family="Oswald", colour="#66c2a5", size="40",hjust = 0.5)
-  ) +
-  ggtitle("top 5 region")
-ggsave("www/plots/region.png", width = 17, height = 13, dpi = 72, units = "cm", device="png")
-
 #Count of Pregnant Cases
-pregnantCount <- coviddatasets %>%
+pregnantCount <- coviddata %>%
   select(Pregnanttab) %>%
- filter(Pregnanttab=="Yes") %>%
+  filter(Pregnanttab=="Yes") %>%
   count(Pregnanttab)
 
-
+source("plots.R")
 
 #Call server to display stuffs
 server <- function(input, output, session) {
@@ -172,17 +142,43 @@ server <- function(input, output, session) {
   
   #Output Total Recoveries
   output$recovery <- renderText({
-    {paste(format(recovered, nsmall=1, big.mark=",")," recoveries",sep=" ")}
+    {format(recovered, nsmall=1, big.mark=",")}
   })
   
   #Output Total Deaths
   output$died <- renderText({
-    {paste(format(totalDeaths$n, nsmall=1, big.mark=","),"died", sep=" ")}
+    {format(totalDeaths, nsmall=1, big.mark=",")}
+  })
+
+  #Output Total asymptomatic
+  output$asymptomatic <- renderText({
+    {format(asymptomatic, nsmall=1, big.mark=",")}
+  })
+  
+  #Output Total critical
+  output$critical <- renderText({
+    {format(critical, nsmall=1, big.mark=",")}
+  })
+
+  #Output Total mild
+  output$mild <- renderText({
+    {format(mild, nsmall=1, big.mark=",")}
+  })
+  
+  #Output Total severe
+  output$severe <- renderText({
+    {format(severe, nsmall=1, big.mark=",")}
   })
   
   #Output New Case
   output$newCase <- renderText({
     {newCase}
+  })
+  
+  #Output Active Cases
+  activeCase <- totalDeaths + recovered
+  output$ActiveCase <- renderText({
+    {format((countofCases$n - activeCase), nsmall=1, big.mark=",")}
   })
   
   #Output Oldest Case
@@ -209,7 +205,7 @@ server <- function(input, output, session) {
   output$newDeaths <- renderText({
     {newDeaths}
   })
-
+  
   #Output latest # of deaths
   output$newRecovery <- renderText({
     {newRecovery}
