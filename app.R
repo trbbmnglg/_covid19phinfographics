@@ -16,10 +16,9 @@ orig_asofDate <- as.Date(asofDate,"%Y%m%d")
 asofDate <- format.Date(orig_asofDate, "%B %d, %Y")
 
 #Extract only needed column
-coviddata <- coviddatasets %>%
+coviddata <<- coviddatasets %>%
   select(Sex,Age,AgeGroup,RegionRes,HealthStatus,DateRepConf, Pregnanttab, RemovalType, DateRepRem) %>%
   arrange(desc(Age))
-coviddata
 
 #Format Date Rep Conf since it has a heterogeneous format (use lubridate) 
 coviddata$DateRepConf <- parse_date_time(coviddata$DateRepConf,c("dmY", "ymd"))
