@@ -63,66 +63,22 @@ newRecovery <- newRecovery$NewCounts
 #Total count of cases
 countofCases <- count(coviddata)
 
-#Health Status
-health <- coviddata %>%
-  select(HealthStatus) %>%
-  group_by(HealthStatus) %>%
-  summarise(healthStatusCount = n())
+source("getdata.R")
 
-#Recovered
-recovered <- health[health$HealthStatus=="Recovered","healthStatusCount"]
-recovered <- recovered$healthStatusCount
+#Health status count
+recovered <- getData(coviddata, HealthStatus,"Recovered", "Count")
+totalDeaths <- getData(coviddata, HealthStatus,"Died","Count")
+critical <- getData(coviddata, HealthStatus,"Critical","Count")
+asymptomatic <- getData(coviddata, HealthStatus,"Asymptomatic","Count")
+mild <- getData(coviddata, HealthStatus,"Mild","Count")
+severe <- getData(coviddata, HealthStatus,"Severe","Count")
 
-#Deaths
-totalDeaths <- health[health$HealthStatus=="Died","healthStatusCount"]
-totalDeaths <- totalDeaths$healthStatusCount
-
-#Critical
-critical <- health[health$HealthStatus=="Critical","healthStatusCount"]
-critical <- critical$healthStatusCount
-
-#Asymptomatic
-asymptomatic <- health[health$HealthStatus=="Asymptomatic","healthStatusCount"]
-asymptomatic <- asymptomatic$healthStatusCount
-
-#Mild
-mild <- health[health$HealthStatus=="Mild","healthStatusCount"]
-mild <- mild$healthStatusCount
-
-#Mild
-severe <- health[health$HealthStatus=="Severe","healthStatusCount"]
-severe <- severe$healthStatusCount
-
-#Gender Percentage
-genderPerCentage <- coviddata %>% 
-  group_by(Sex) %>%
-  summarise(
-    count = n(),
-    perc = round((count / nrow(.)), 2 ) * 100
-  )
-
-#Data For Male
-malePercentage <- genderPerCentage[genderPerCentage$Sex=="Male","perc"]
-malePercentage <- as.character(malePercentage)
-malePercentage <- paste(malePercentage,"%",sep="")
-
-#Data For Female
-femalePercentage <- genderPerCentage[genderPerCentage$Sex=="Female","perc"]
-femalePercentage <- as.character(femalePercentage)
-femalePercentage <- paste(femalePercentage,"%",sep="")
-
-#Region with least case
-leastCasereg <- coviddata %>% 
-  select(RegionRes) %>%
-  count(RegionRes) %>%
-  arrange(n) %>%
-  top_n(-1)
+#Gender percentage
+malePercentage <- getData(coviddata, Sex, "Male", "Perc")
+femalePercentage <- getData(coviddata, Sex, "Female", "Perc")
 
 #Count of Pregnant Cases
-pregnantCount <- coviddata %>%
-  select(Pregnanttab) %>%
-  filter(Pregnanttab=="Yes") %>%
-  count(Pregnanttab)
+pregnantCount <- getData(coviddata, Pregnanttab, "Yes", "Count")
 
 source("plots.R")
 
@@ -217,7 +173,7 @@ server <- function(input, output, session) {
   
   #Output count of pregnant cases
   output$pregnantCount <- renderText({
-    {pregnantCount$n}
+    {pregnantCount}
   })    
   
   #Output average of cases

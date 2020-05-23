@@ -4,25 +4,25 @@ covidTrend <- coviddata %>%
   count(DateRepConf)
 covidTrend <- covidTrend %>%
   ggplot(aes(DateRepConf, n )) +
-  geom_line(color="#9f41d0", size=2, linetype=1) +
+  geom_line(color="#316caf", size=2, linetype=1) +
   scale_x_date(expand = c(0, 0)) +
   theme_ipsum(
-    grid_col = "#9f41d0",
+    grid_col = "#316caf",
     axis_text_size = 50,
     axis_title_size = 18,
     axis_title_family= "Oswald",
     plot_title_family = "Oswald"
   ) +
   theme(
-    axis.text.y = element_text(colour = "#9f41d0"),
-    axis.text.x = element_text(colour = "#9f41d0"),
-    axis.title.x = element_text(margin = margin(r = 50), colour = "#9f41d0"),
-    axis.title.y = element_text(colour = "#9f41d0"),
+    axis.text.y = element_text(colour = "#316caf"),
+    axis.text.x = element_text(colour = "#316caf"),
+    axis.title.x = element_text(margin = margin(r = 50), colour = "#316caf"),
+    axis.title.y = element_text(colour = "#316caf"),
     plot.margin = margin(0,0,0,0),
-    plot.title = element_text(family="Oswald", face="plain",colour="#9f41d0", size="130",hjust = 0.5),
+    plot.title = element_text(family="Oswald", face="plain",colour="#316caf", size="130",hjust = 0.5),
     text = element_text(family = "Oswald", face="plain"),
     panel.grid.minor.y = element_line(size = .3),
-    panel.grid.major.y = element_line(size = .3, colour = "#9f41d0")) +
+    panel.grid.major.y = element_line(size = .3, colour = "#316caf")) +
   labs(x="", y="", title="cases over time")
 ggsave("www/plots/covidtrend.png", width = 14, height = 9, units = "in")
 
