@@ -198,6 +198,16 @@ server <- function(input, output, session) {
     animation = TRUE
   )
   
+  #Test ggplotly
+  output$testPlot <- renderPlotly({
+    print(ggplotly(covidTrend))
+  })
+  
+  #Test ggplotly
+  output$testPlot2 <- renderPlotly({
+    print(ggplotly(diedandrecovered))
+  })
+  
 }
 
 shinyApp(ui = htmlTemplate("www/index.html"), server)

@@ -1,14 +1,15 @@
 #Monthly Trend
 covidTrend <- coviddata %>%
   select(DateRepConf) %>%
-  count(DateRepConf)
+  count(DateRepConf) %>%
+  rename(Date=DateRepConf)
 covidTrend <- covidTrend %>%
-  ggplot(aes(DateRepConf, n )) +
-  geom_line(color="#316caf", size=2, linetype=1) +
+  ggplot(aes(Date, n )) +
+  geom_line(color="#316caf", size=.5, linetype=1) +
   scale_x_date(expand = c(0, 0)) +
   theme_ipsum(
     grid_col = "#316caf",
-    axis_text_size = 50,
+    axis_text_size = 10,
     axis_title_size = 18,
     axis_title_family= "Oswald",
     plot_title_family = "Oswald"
@@ -19,12 +20,12 @@ covidTrend <- covidTrend %>%
     axis.title.x = element_text(margin = margin(r = 50), colour = "#316caf"),
     axis.title.y = element_text(colour = "#316caf"),
     plot.margin = margin(0,0,0,0),
-    plot.title = element_text(family="Oswald", face="plain",colour="#316caf", size="130",hjust = 0.5),
+    plot.title = element_text(family="Oswald", face="plain",colour="#316caf", size="25",hjust = 0.5),
     text = element_text(family = "Oswald", face="plain"),
     panel.grid.minor.y = element_line(size = .3),
     panel.grid.major.y = element_line(size = .3, colour = "#316caf")) +
   labs(x="", y="", title="cases over time")
-ggsave("www/plots/covidtrend.png", width = 14, height = 9, units = "in")
+#ggsave("www/plots/covidtrend.png", width = 14, height = 9, units = "in")
 
 #Generate Pie chart for count per Region
 nb.cols <- 20
@@ -65,26 +66,26 @@ recovered <-coviddata %>%
   rename(RecoveredCount = NewCounts)
 recovered
 
-ggplot() + 
-  geom_line(data = died, aes(x = DateRepRem, y = DeathCount,colour="Died" ),size = 2, linetype = 1) +
-  geom_line(data = recovered, aes(x = DateRepRem, y = RecoveredCount, colour="Recovered"),size = 2, linetype = 1) +
+diedandrecovered <- ggplot() + 
+  geom_line(data = died, aes(x = DateRepRem, y = DeathCount,colour="Died" ),size = .5, linetype = 1) +
+  geom_line(data = recovered, aes(x = DateRepRem, y = RecoveredCount, colour="Recovered"),size = .5, linetype = 1) +
   scale_x_date(expand = c(0, 0)) +
   scale_color_manual("",
                      labels = c("died", "recovered"),
                      values = c("#d63031", "#00b894")) +
   theme_ipsum(
     grid_col = "#837a91",
-    axis_text_size = 50,
+    axis_text_size = 10,
     axis_title_size = 18,
     axis_title_family= "Oswald",
     plot_title_family = "Oswald"
   ) +
   theme(
     plot.margin = margin(0,0,0,0),
-    plot.title = element_text(family="Oswald", face="plain",colour="#837a91", size="130",hjust = 0.5),
+    plot.title = element_text(family="Oswald", face="plain",colour="#837a91", size="20",hjust = 0.5),
     panel.grid.minor.y = element_line(size = .3),
     panel.grid.major.y = element_line(size = .3, colour = "#837a91"),
-    legend.text = element_text(colour="#837a91", family="Oswald", size=30),
+    legend.text = element_text(colour="#837a91", family="Oswald", size=10),
     text = element_text(family = "Oswald", face="plain")) +
   labs(x="", y="", title="died vs recovered")
-ggsave("www/plots/recoveredvsdeath.png", width = 14, height = 9, units = "in")
+#ggsave("www/plots/recoveredvsdeath.png", width = 14, height = 9, units = "in")
