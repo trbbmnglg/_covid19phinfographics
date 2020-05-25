@@ -23,7 +23,7 @@ covidTrend <- covidTrend %>%
     text = element_text(family = "Oswald", face="plain"),
     panel.grid.minor.y = element_line(size = .3),
     panel.grid.major.y = element_line(size = .3, colour = "#316caf")) +
-  labs(x="", y="", title="cases per day")
+  labs(x="", y="", title="cases over time")
 ggsave("www/plots/covidtrend.png", width = 14, height = 9, units = "in")
 
 #Generate Pie chart for count per Region
